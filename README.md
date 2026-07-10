@@ -262,6 +262,91 @@ client = OpenAI(
 - 어떤 모델을 쓸지는 `OPENROUTER_MODEL` 환경 변수로 정합니다.
 - 기본 모델은 `openai/gpt-4o-mini`입니다.
 
+### OpenRouter 사용 방법
+
+OpenRouter를 이 프로젝트에서 쓰려면 아래 순서대로 준비하면 됩니다.
+
+1. OpenRouter 웹사이트에 가입합니다.
+2. 결제 또는 크레딧 메뉴에서 사용할 만큼의 credit을 충전합니다.
+3. API Keys 메뉴에서 새 API key를 만듭니다.
+4. 만든 API key를 로컬 `.env` 파일 또는 GitHub Secrets에 등록합니다.
+5. `OPENROUTER_MODEL`에 사용할 모델 이름을 적습니다.
+6. `python update_job.py` 또는 GitHub Actions를 통해 댓글 분석을 실행합니다.
+
+로컬 `.env` 예시는 아래와 같습니다.
+
+```text
+OPENROUTER_API_KEY=여기에_OPENROUTER_API_키
+OPENROUTER_MODEL=openai/gpt-4o-mini
+OPENROUTER_BATCH_SIZE=10
+OPENROUTER_TIMEOUT=60
+```
+
+GitHub Actions에서는 `.env` 파일을 쓰지 않습니다. GitHub 저장소의 Secrets에 아래 이름으로 등록해야 합니다.
+
+```text
+OPENROUTER_API_KEY
+```
+
+이름이 정확히 같아야 `.github/workflows/update_data.yml`에서 값을 읽을 수 있습니다.
+
+### AI 토큰과 비용
+
+OpenRouter는 보통 **AI 토큰 사용량**을 기준으로 비용이 계산됩니다.
+
+토큰은 AI 모델이 글을 읽고 쓸 때 사용하는 작은 텍스트 단위입니다. 한글의 경우 글자 수와 토큰 수가 정확히 1:1로 대응되지는 않지만, 쉽게 생각하면 “AI가 처리한 텍스트 조각의 양”이라고 보면 됩니다.
+
+AI 모델을 호출하면 보통 아래 두 종류의 토큰이 비용에 영향을 줍니다.
+
+- 입력 토큰: 프롬프트와 댓글 원문처럼 AI에게 보내는 내용
+- 출력 토큰: AI가 감성, 카테고리, 키워드 JSON을 만들어 돌려주는 내용
+
+즉, 댓글이 많거나 프롬프트가 길거나 출력이 길면 토큰 사용량이 늘어납니다. 토큰 사용량이 늘어나면 OpenRouter credit도 더 많이 소모됩니다.
+
+OpenRouter는 모델마다 가격이 다릅니다. 큰 모델, 추론 모델, 고성능 모델은 비쌀 수 있고, 작은 모델은 상대적으로 저렴합니다. 최신 가격은 OpenRouter의 모델별 pricing 화면에서 확인해야 합니다.
+
+### credit을 충전해서 써야 합니다
+
+OpenRouter API는 일반적인 웹 구독형 챗봇과 다르게, API 호출 비용을 credit으로 차감하는 방식으로 이해하면 쉽습니다.
+
+무료 모델이나 무료 사용량이 있을 수 있지만, 안정적으로 운영하려면 보통 OpenRouter 계정에 credit을 충전해 두는 편이 좋습니다. credit이 부족하면 GitHub Actions가 실행되어도 OpenRouter 분석 단계에서 실패할 수 있습니다.
+
+관리자는 아래를 주기적으로 확인하는 것이 좋습니다.
+
+- OpenRouter 계정에 남은 credit
+- API key별 사용량
+- API key별 credit limit
+- 현재 사용 중인 모델의 토큰 단가
+- GitHub Actions 로그의 OpenRouter 오류 여부
+
+API key별 credit limit을 설정하면 실수로 너무 많은 비용이 나가는 것을 줄일 수 있습니다.
+
+### 이 프로젝트의 OpenRouter 비용 감각
+
+이 프로젝트는 댓글 감성, 주제, 키워드를 JSON으로 분류하는 작업입니다.
+
+복잡한 장문 추론이나 고난도 코딩 작업이 아니기 때문에, 아주 큰 모델을 쓰지 않아도 충분히 운영할 수 있습니다. 기본값으로 둔 `openai/gpt-4o-mini` 같은 작은 모델 계열로도 대부분의 댓글 분류 작업은 충분히 처리됩니다.
+
+또한 이 프로젝트는 **전체 댓글을 매번 다시 분석하지 않고 새 댓글만 분석**합니다.
+
+이미 CSV에 저장된 댓글은 다시 OpenRouter로 보내지 않기 때문에, 운영 중 실제 credit 소모는 보통 다음 요소에 따라 작게 유지됩니다.
+
+- 새로 달리는 댓글 수
+- 프롬프트 길이
+- `OPENROUTER_BATCH_SIZE`
+- 선택한 모델의 토큰 단가
+
+따라서 댓글이 폭발적으로 늘어나는 영상이 아니라면 많은 credit을 계속 소모하는 구조는 아닙니다. 소규모 모니터링 용도에서는 운영비가 비교적 낮게 유지될 가능성이 큽니다.
+
+다만 AI 토큰 비용은 실제 사용량과 모델 가격에 따라 달라집니다. 운영자는 처음 며칠 동안 OpenRouter 사용량 화면을 확인하면서 어느 정도 credit이 소모되는지 감을 잡는 것이 좋습니다.
+
+OpenRouter 공식 참고 링크:
+
+- API 인증과 API key: https://openrouter.ai/docs/api/reference/authentication
+- 모델별 가격: https://openrouter.ai/pricing
+- 모델 pricing 구조: https://openrouter.ai/docs/guides/overview/models
+- 요금과 credit 관련 FAQ: https://openrouter.ai/docs/faq
+
 ### OpenRouter가 필요한 이유
 
 댓글 분석은 단순한 숫자 계산이 아닙니다. 댓글 문장을 읽고 맥락을 해석해야 합니다.
