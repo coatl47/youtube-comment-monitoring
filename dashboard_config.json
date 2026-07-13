@@ -11,8 +11,8 @@
       "start_date": "20260214",
       "video_start_at": "2026-02-14 08:00:00",
       "prompt_file": "prompt/prompt_20260214.txt",
-      "enabled": true,
-      "collect_enabled": true
+      "enabled": false,
+      "collect_enabled": false
     },
     {
       "id": "future_scenario_shorts_20260220",
@@ -22,8 +22,8 @@
       "start_date": "20260220",
       "video_start_at": "2026-02-20 17:30:00",
       "prompt_file": "prompt/prompt_20260220.txt",
-      "enabled": true,
-      "collect_enabled": true
+      "enabled": false,
+      "collect_enabled": false
     },
     {
       "id": "sampro_ceo_ep1_20260423",
@@ -33,8 +33,8 @@
       "start_date": "20260423",
       "video_start_at": "2026-04-23 19:00:00",
       "prompt_file": "prompt/prompt_20260423.txt",
-      "enabled": true,
-      "collect_enabled": true
+      "enabled": false,
+      "collect_enabled": false
     },
     {
       "id": "youtube_K7KSTS8RwVc",
