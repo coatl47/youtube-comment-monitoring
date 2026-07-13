@@ -8,6 +8,9 @@ on:
     - cron: '*/5 * * * *'  # 5분마다 실행
   workflow_dispatch:        # GitHub에서 수동 버튼 클릭으로도 실행 가능
 
+permissions:
+  contents: write
+
 concurrency:
   group: youtube-dashboard-data-write
   cancel-in-progress: false
