@@ -50,7 +50,18 @@ def build_report(config: dict, youtube_url: str, video_id: str) -> tuple[dict, b
         except ValueError:
             continue
         if existing_video_id == video_id:
-            return report, False
+            # 비활성화된 리포트를 다시 요청하면 재활성화하고 기본 화면으로 되돌립니다.
+            changed = False
+            if not report.get("enabled", True):
+                report["enabled"] = True
+                changed = True
+            if not report.get("collect_enabled", True):
+                report["collect_enabled"] = True
+                changed = True
+            if config.get("default_report_id") != report["id"]:
+                config["default_report_id"] = report["id"]
+                changed = True
+            return report, changed
 
     stats = fetch_video_stats(youtube_url)
     if not stats:
