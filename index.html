@@ -192,6 +192,11 @@
             white-space: nowrap;
         }
 
+        .rep-icon.positive {
+            color: #16A34A;
+            font-weight: 900;
+        }
+
         .rep-empty {
             font-size: 0.82rem;
             color: var(--muted);
@@ -1783,10 +1788,10 @@
                     return;
                 }
 
-                const renderList = (items) => {
+                const renderList = (items, icon) => {
                     if (!items || !items.length) return '<div class="rep-empty">해당하는 의견이 없습니다.</div>';
                     return `<ul class="rep-list">${items.map(item => `
-                        <li><span class="rep-like">👍 ${formatNumber(item.like_count)}</span>${safeText(item.text)}</li>
+                        <li><span class="rep-like">${icon} ${formatNumber(item.like_count)}</span>${safeText(item.text)}</li>
                     `).join('')}</ul>`;
                 };
 
@@ -1796,8 +1801,8 @@
                         <div class="rep-category">
                             <div class="rep-category-title">${safeText(category)} · 대표 의견</div>
                             <div class="rep-columns">
-                                <div><div class="rep-column-title positive">긍정 TOP 5</div>${renderList(bucket['긍정'])}</div>
-                                <div><div class="rep-column-title negative">부정 TOP 5</div>${renderList(bucket['부정'])}</div>
+                                <div><div class="rep-column-title positive">긍정 TOP 5</div>${renderList(bucket['긍정'], '<span class="rep-icon positive">◯</span>')}</div>
+                                <div><div class="rep-column-title negative">부정 TOP 5</div>${renderList(bucket['부정'], '❌')}</div>
                             </div>
                         </div>
                     `;
