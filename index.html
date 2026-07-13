@@ -71,6 +71,63 @@
             flex-wrap: wrap;
         }
 
+        .analysis-request {
+            margin: 22px 0 24px;
+            padding: 18px;
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(221, 228, 238, 0.92);
+            border-radius: 22px;
+            box-shadow: 0 16px 34px rgba(22, 35, 54, 0.06);
+        }
+
+        .analysis-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .analysis-input {
+            min-width: 0;
+            flex: 1;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 13px 16px;
+            color: var(--text);
+            background: white;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .analysis-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(24, 90, 189, 0.12);
+        }
+
+        .analysis-button {
+            flex: 0 0 auto;
+            border: 0;
+            border-radius: 14px;
+            padding: 13px 24px;
+            background: var(--primary);
+            color: white;
+            font-weight: 800;
+            box-shadow: 0 12px 24px rgba(24, 90, 189, 0.2);
+        }
+
+        .analysis-button:hover {
+            background: #124b9d;
+        }
+
+        .analysis-help,
+        .analysis-status {
+            margin: 10px 2px 0;
+            color: var(--muted);
+            font-size: 0.86rem;
+        }
+
+        .analysis-status.is-error {
+            color: var(--negative);
+        }
+
         .dashboard-tab {
             border: 1px solid var(--line);
             background: rgba(255, 255, 255, 0.86);
@@ -561,6 +618,27 @@
                 scrollbar-width: none;
             }
 
+            .analysis-request {
+                margin: 16px 0 18px;
+                padding: 12px;
+                border-radius: 18px;
+            }
+
+            .analysis-form {
+                align-items: stretch;
+            }
+
+            .analysis-input,
+            .analysis-button {
+                padding: 12px 13px;
+                border-radius: 12px;
+            }
+
+            .analysis-button {
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+
             .nav-wrap::-webkit-scrollbar {
                 display: none;
             }
@@ -743,7 +821,28 @@
             </div>
         </header>
 
-        <nav class="nav-wrap" id="tabsContainer"></nav>
+        <!-- 기존 종합/채널 탭은 추후 다시 사용할 수 있도록 마크업과 렌더링 코드를 유지합니다. -->
+        <nav class="nav-wrap d-none" id="tabsContainer" aria-hidden="true"></nav>
+
+        <section class="analysis-request" aria-labelledby="analysisRequestTitle">
+            <h2 class="visually-hidden" id="analysisRequestTitle">유튜브 영상 분석 요청</h2>
+            <form class="analysis-form" id="analysisRequestForm">
+                <label class="visually-hidden" for="youtubeUrlInput">유튜브 주소</label>
+                <input
+                    class="analysis-input"
+                    id="youtubeUrlInput"
+                    name="youtubeUrl"
+                    type="url"
+                    inputmode="url"
+                    autocomplete="url"
+                    placeholder="유튜브 주소를 입력하세요"
+                    required
+                >
+                <button class="analysis-button" type="submit">분석</button>
+            </form>
+            <p class="analysis-help">분석 버튼을 누른 뒤 GitHub에서 요청 등록을 완료하면 댓글 수집과 AI 분석이 자동으로 시작됩니다.</p>
+            <p class="analysis-status" id="analysisRequestStatus" role="status" aria-live="polite"></p>
+        </section>
 
         <section id="overviewSection"></section>
         <section id="detailSection" class="d-none"></section>
@@ -788,6 +887,58 @@
         const isMobile = window.innerWidth < 768;
         const chartFontSize = isMobile ? 11 : 12;
         const appState = { config: null, reports: [], bundles: new Map(), activeTab: 'overview', overviewCompareIds: [] };
+        const analysisIssueUrl = 'https://github.com/coatl47/youtube-comment-monitoring/issues/new';
+
+        function normalizeYoutubeUrl(value) {
+            try {
+                const url = new URL(String(value || '').trim());
+                const host = url.hostname.toLowerCase().replace(/^www\./, '');
+                const isYoutubeHost = host === 'youtube.com' || host === 'm.youtube.com' || host === 'youtu.be';
+                if (!isYoutubeHost) return null;
+
+                let videoId = '';
+                if (host === 'youtu.be') {
+                    videoId = url.pathname.split('/').filter(Boolean)[0] || '';
+                } else {
+                    videoId = url.searchParams.get('v') || '';
+                    if (!videoId) {
+                        const parts = url.pathname.split('/').filter(Boolean);
+                        if (['shorts', 'embed', 'live'].includes(parts[0])) videoId = parts[1] || '';
+                    }
+                }
+
+                if (!/^[0-9A-Za-z_-]{11}$/.test(videoId)) return null;
+                return `https://www.youtube.com/watch?v=${videoId}`;
+            } catch (error) {
+                return null;
+            }
+        }
+
+        function attachAnalysisRequestForm() {
+            const form = document.getElementById('analysisRequestForm');
+            const input = document.getElementById('youtubeUrlInput');
+            const status = document.getElementById('analysisRequestStatus');
+            if (!form || !input || !status) return;
+
+            form.addEventListener('submit', event => {
+                event.preventDefault();
+                const youtubeUrl = normalizeYoutubeUrl(input.value);
+                status.classList.remove('is-error');
+
+                if (!youtubeUrl) {
+                    status.textContent = '올바른 유튜브 영상 주소를 입력해 주세요.';
+                    status.classList.add('is-error');
+                    input.focus();
+                    return;
+                }
+
+                const requestUrl = new URL(analysisIssueUrl);
+                requestUrl.searchParams.set('title', '[YouTube 분석 요청] 새 영상 분석');
+                requestUrl.searchParams.set('body', `유튜브 URL:\n${youtubeUrl}\n\n이 요청을 등록하면 자동 분석이 시작됩니다.`);
+                status.textContent = 'GitHub에서 요청 등록을 완료해 주세요. 등록 후 분석이 자동으로 시작됩니다.';
+                window.open(requestUrl.toString(), '_blank', 'noopener,noreferrer');
+            });
+        }
 
         function formatNumber(value) {
             const number = Number(value || 0);
@@ -1632,6 +1783,7 @@
             });
         }
 
+        attachAnalysisRequestForm();
         loadDashboard();
     </script>
 </body>

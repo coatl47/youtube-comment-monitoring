@@ -116,7 +116,8 @@ def run_update_for_report(report, config):
             else:
                 df_stats = build_initial_stats_frame(report, stats.get("title") or report.get("video_title", ""))
 
-            new_row = pd.DataFrame([stats])
+            stats_columns = ["timestamp", "view_count", "like_count", "comment_count", "title"]
+            new_row = pd.DataFrame([{column: stats.get(column) for column in stats_columns}])
             df_stats = pd.concat([df_stats, new_row], ignore_index=True)
             df_stats.to_csv(stats_file, index=False)
             logger.info("[%s] 영상 통계 업데이트 완료: views=%s likes=%s comments=%s", report_id, stats["view_count"], stats["like_count"], stats["comment_count"])
@@ -177,6 +178,11 @@ def main():
     configure_logging()
     dashboard_config = load_dashboard_config()
     reports = get_collectable_reports(dashboard_config)
+    target_report_id = os.getenv("REPORT_ID", "").strip()
+    if target_report_id:
+        reports = [report for report in reports if report.get("id") == target_report_id]
+        if not reports:
+            raise SystemExit(f"요청한 report를 찾을 수 없습니다: {target_report_id}")
     if not reports:
         logger.warning("수집 대상 영상이 없습니다. dashboard_config.json의 reports 설정을 확인하세요.")
         return
