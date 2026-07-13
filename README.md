@@ -1491,3 +1491,5 @@ AI 모델이 JSON 형식을 제대로 지키지 못했을 가능성이 있습니
 8. 로컬에서 작업할 경우 `.env`를 만들고 `python update_job.py`를 실행해 봅니다.
 9. 변경 후 `python -m http.server 8000`으로 대시보드를 확인합니다.
 10. 문제가 없으면 commit 후 push합니다.
+
+<!-- write-access test by Claude Code, 2026-07-13 - invisible when rendered -->
