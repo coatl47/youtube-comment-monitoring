@@ -131,6 +131,7 @@ def fetch_video_stats(video_url: str) -> dict:
 
     return {
         "title": item["snippet"]["title"],
+        "published_at": item["snippet"].get("publishedAt"),
         "view_count": int(stats.get("viewCount", 0)),
         "like_count": int(stats.get("likeCount", 0)),
         "comment_count": int(stats.get("commentCount", 0)),

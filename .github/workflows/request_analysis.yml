@@ -1,0 +1,81 @@
+name: Analyze Requested YouTube Video
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: youtube-dashboard-data-write
+  cancel-in-progress: false
+
+jobs:
+  analyze-request:
+    if: >-
+      startsWith(github.event.issue.title, '[YouTube 분석 요청]') &&
+      contains('OWNER,MEMBER,COLLABORATOR', github.event.issue.author_association)
+    runs-on: ubuntu-latest
+    steps:
+      - name: 저장소 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: 파이썬 환경 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: 필요 라이브러리 설치
+        run: pip install -r requirements.txt
+
+      - name: 요청 검증 및 분석 대상 등록
+        id: request
+        env:
+          REQUEST_BODY: ${{ github.event.issue.body }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          YOUTUBE_API_TIMEOUT: 30
+        run: |
+          python request_analysis.py "$REQUEST_BODY" > request_result.json
+          REPORT_ID="$(python -c "import json; print(json.load(open('request_result.json'))['report_id'])")"
+          echo "report_id=$REPORT_ID" >> "$GITHUB_OUTPUT"
+
+      - name: 댓글 수집 및 AI 분석
+        env:
+          PYTHONUNBUFFERED: "1"
+          LOG_LEVEL: INFO
+          REPORT_ID: ${{ steps.request.outputs.report_id }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          YOUTUBE_API_TIMEOUT: 30
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          OPENROUTER_MODEL: openai/gpt-4o-mini
+          OPENROUTER_BATCH_SIZE: 10
+          OPENROUTER_TIMEOUT: 60
+          TZ: Asia/Seoul
+        run: python update_job.py
+
+      - name: 분석 결과 게시
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add dashboard_config.json analyzed_comments/ video_stats/
+          git diff --staged --quiet || git commit -m "Analyze requested YouTube video"
+          git pull --rebase origin main
+          git push origin main
+
+      - name: 완료 안내
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue comment "${{ github.event.issue.number }}" --body "분석이 완료되었습니다. 잠시 후 [대시보드](https://coatl47.github.io/youtube-comment-monitoring/)에서 결과를 확인할 수 있습니다."
+          gh issue close "${{ github.event.issue.number }}"
+
+      - name: 실패 안내
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue comment "${{ github.event.issue.number }}" --body "분석을 완료하지 못했습니다. [실행 기록](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})에서 원인을 확인해 주세요."
