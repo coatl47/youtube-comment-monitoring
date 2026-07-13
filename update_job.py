@@ -15,8 +15,12 @@ from config_loader import (
     data_file_for_report,
     stats_file_for_report,
 )
+from select_representative_comments import (
+    generate_for_report as generate_representative_comments,
+    representative_file_for_report,
+)
 
-COMMENT_COLUMNS = ["text", "sentiment", "category", "keyword"]
+COMMENT_COLUMNS = ["text", "sentiment", "category", "keyword", "like_count"]
 logger = logging.getLogger(__name__)
 
 
@@ -70,12 +74,20 @@ def load_existing_comments(data_file):
     if missing_columns:
         logger.warning("댓글 CSV에 누락 컬럼이 있어 기본값으로 보정합니다: file=%s columns=%s", data_file, missing_columns)
         for column in missing_columns:
-            existing_df[column] = "" if column == "text" else "누락"
+            if column == "text":
+                existing_df[column] = ""
+            elif column == "like_count":
+                existing_df[column] = 0
+            else:
+                existing_df[column] = "누락"
 
+    existing_df["like_count"] = (
+        pd.to_numeric(existing_df["like_count"], errors="coerce").fillna(0).astype(int)
+    )
     return existing_df[COMMENT_COLUMNS]
 
 
-def build_analyzed_rows(new_comments, analyzed_list):
+def build_analyzed_rows(new_comments, analyzed_list, like_count_by_text):
     final_data = []
     for index, comment in enumerate(new_comments):
         result = analyzed_list[index] if index < len(analyzed_list) else {}
@@ -87,6 +99,7 @@ def build_analyzed_rows(new_comments, analyzed_list):
         item["sentiment"] = normalize_sentiment_label(item.get("sentiment"))
         item["category"] = normalize_category_label(item.get("category"))
         item["keyword"] = item.get("keyword", "누락") or "누락"
+        item["like_count"] = like_count_by_text.get(normalize(comment), 0)
         final_data.append(item)
 
     if len(analyzed_list) != len(new_comments):
@@ -137,15 +150,33 @@ def run_update_for_report(report, config):
 
     existing_df = load_existing_comments(data_file)
 
+    like_count_by_text = {}
+    for item in raw_comments:
+        normalized_text = normalize(item["text"])
+        if normalized_text:
+            like_count_by_text[normalized_text] = max(
+                like_count_by_text.get(normalized_text, 0), item["like_count"]
+            )
+
     existing_normalized = set(normalize(text) for text in existing_df["text"].tolist()) if not existing_df.empty else set()
+
+    # 기존 댓글의 추천수를 이번 수집 값으로 갱신합니다.
+    likes_changed = False
+    if not existing_df.empty:
+        refreshed_likes = existing_df.apply(
+            lambda row: like_count_by_text.get(normalize(row["text"]), row["like_count"]),
+            axis=1,
+        ).astype(int)
+        likes_changed = not refreshed_likes.equals(existing_df["like_count"])
+        existing_df["like_count"] = refreshed_likes
 
     # 중복되지 않은 신규 댓글만 선별 (공백 무시 기준)
     new_comments = []
     seen_in_batch = set()
-    for comment in raw_comments:
-        normalized_comment = normalize(comment)
+    for item in raw_comments:
+        normalized_comment = normalize(item["text"])
         if normalized_comment not in existing_normalized and normalized_comment not in seen_in_batch:
-            new_comments.append(comment)
+            new_comments.append(item["text"])
             seen_in_batch.add(normalized_comment)
 
     logger.info("[%s] 댓글 비교 완료: fetched=%s existing=%s new=%s", report_id, len(raw_comments), len(existing_normalized), len(new_comments))
@@ -157,7 +188,7 @@ def run_update_for_report(report, config):
         analyzed_list = analyze_comments_with_llm(new_comments, prompt_template)
         if analyzed_list:
             # LLM이 반환한 text가 변형되었을 수 있으므로 원본 댓글을 기준으로 저장합니다.
-            final_data = build_analyzed_rows(new_comments, analyzed_list)
+            final_data = build_analyzed_rows(new_comments, analyzed_list, like_count_by_text)
             new_df = pd.DataFrame(final_data)
             updated_df = pd.concat([existing_df, new_df], ignore_index=True)
             updated_df.to_csv(data_file, index=False)
@@ -169,7 +200,17 @@ def run_update_for_report(report, config):
         logger.error("[%s] 프롬프트 파일이 없어 새 댓글 분석을 건너뜁니다: %s", report_id, prompt_file)
         return False
     else:
+        if likes_changed:
+            existing_df.to_csv(data_file, index=False)
+            logger.info("[%s] 기존 댓글 추천수를 갱신했습니다.", report_id)
         logger.info("[%s] 분석할 새로운 댓글이 없습니다.", report_id)
+
+    # 3. 분류별 대표 댓글 갱신 (새 댓글이 있거나 결과 파일이 없을 때만 LLM 호출)
+    try:
+        if new_comments or not os.path.exists(representative_file_for_report(report)):
+            generate_representative_comments(report, config)
+    except Exception:
+        logger.exception("[%s] 대표 댓글 선별 중 오류가 발생했습니다.", report_id)
 
     return not report_failed
 

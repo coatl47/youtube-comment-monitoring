@@ -15,6 +15,14 @@ from config_loader import (
     load_dashboard_config,
     resolve_prompt_file,
 )
+from select_representative_comments import generate_for_report as generate_representative_comments
+
+
+def parse_like_count(value) -> int:
+    try:
+        return int(float(value or 0))
+    except (TypeError, ValueError):
+        return 0
 
 
 def parse_args() -> argparse.Namespace:
@@ -30,7 +38,7 @@ def parse_args() -> argparse.Namespace:
 
 def write_rows(data_file: str, rows: list[dict]) -> None:
     with open(data_file, "w", encoding="utf-8", newline="") as file:
-        writer = csv.DictWriter(file, fieldnames=["text", "sentiment", "category", "keyword"])
+        writer = csv.DictWriter(file, fieldnames=["text", "sentiment", "category", "keyword", "like_count"])
         writer.writeheader()
         writer.writerows(rows)
 
@@ -47,6 +55,7 @@ def normalize_existing_rows(data_file: str) -> list[dict]:
                 "sentiment": normalize_sentiment_label(row.get("sentiment")),
                 "category": normalize_category_label(row.get("category")),
                 "keyword": row.get("keyword", "누락") or "누락",
+                "like_count": parse_like_count(row.get("like_count")),
             }
         )
 
@@ -74,18 +83,20 @@ def analyze_report(report: dict, config: dict, normalize_only: bool = False) -> 
     with open(data_file, "r", encoding="utf-8") as file:
         rows = list(csv.DictReader(file))
 
-    comments = [row["text"] for row in rows if row.get("text")]
+    source_rows = [row for row in rows if row.get("text")]
+    comments = [row["text"] for row in source_rows]
     analyzed_rows = analyze_comments_with_llm(comments, prompt_template)
 
     final_rows = []
-    for index, comment in enumerate(comments):
+    for index, source_row in enumerate(source_rows):
         analyzed = analyzed_rows[index] if index < len(analyzed_rows) else {}
         final_rows.append(
             {
-                "text": comment,
+                "text": source_row["text"],
                 "sentiment": normalize_sentiment_label(analyzed.get("sentiment", "오류")),
                 "category": normalize_category_label(analyzed.get("category", "기타")),
                 "keyword": analyzed.get("keyword", "누락"),
+                "like_count": parse_like_count(source_row.get("like_count")),
             }
         )
 
@@ -94,6 +105,8 @@ def analyze_report(report: dict, config: dict, normalize_only: bool = False) -> 
     print(f"re-analyzed {len(final_rows)} comments in {data_file} ({report.get('id')})")
     print("sentiment:", Counter(row["sentiment"] for row in final_rows))
     print("category:", Counter(row["category"] for row in final_rows))
+
+    generate_representative_comments(report, config)
 
 
 def main() -> None:

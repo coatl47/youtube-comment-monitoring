@@ -65,7 +65,10 @@ def extract_video_id(url: str) -> str:
 
 
 def fetch_youtube_comments(video_url: str, max_results: int = None) -> list:
-    """유튜브 영상의 댓글을 수집합니다. max_results가 없으면 모든 댓글을 수집합니다."""
+    """유튜브 영상의 댓글을 수집합니다. max_results가 없으면 모든 댓글을 수집합니다.
+
+    각 댓글은 {"text": 댓글 내용, "like_count": 추천수} dict로 반환합니다.
+    """
     api_key = os.getenv("YOUTUBE_API_KEY")
     if not api_key:
         raise ValueError("YOUTUBE_API_KEY가 설정되어 있지 않습니다. 로컬은 .env, GitHub Actions는 Secrets를 확인하세요.")
@@ -91,8 +94,13 @@ def fetch_youtube_comments(video_url: str, max_results: int = None) -> list:
         page_count += 1
 
         for item in response.get("items", []):
-            comment = item["snippet"]["topLevelComment"]["snippet"]["textDisplay"]
-            comments.append(comment)
+            snippet = item["snippet"]["topLevelComment"]["snippet"]
+            comments.append(
+                {
+                    "text": snippet["textDisplay"],
+                    "like_count": int(snippet.get("likeCount", 0) or 0),
+                }
+            )
 
         logger.debug("댓글 페이지 수집 완료: video_id=%s page=%s total=%s", video_id, page_count, len(comments))
 
