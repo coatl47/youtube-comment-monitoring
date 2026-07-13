@@ -1,6 +1,6 @@
 {
   "dashboard_title": "국민연금 이사장 유튜브 여론 모니터링",
-  "default_report_id": "sampro_ceo_ep1_20260423",
+  "default_report_id": "youtube_K7KSTS8RwVc",
   "default_prompt_file": "prompt/prompt_base.txt",
   "reports": [
     {
@@ -33,6 +33,17 @@
       "start_date": "20260423",
       "video_start_at": "2026-04-23 19:00:00",
       "prompt_file": "prompt/prompt_20260423.txt",
+      "enabled": true,
+      "collect_enabled": true
+    },
+    {
+      "id": "youtube_K7KSTS8RwVc",
+      "tab_label": "고민정 \"86그룹 언제까지 전면에?…젊은 민주당\"",
+      "video_title": "고민정 \"86그룹 언제까지 전면에?…젊은 민주당\"",
+      "video_url": "https://www.youtube.com/watch?v=K7KSTS8RwVc",
+      "start_date": "20260713_221210",
+      "video_start_at": "2026-07-10 18:15:07",
+      "prompt_file": "prompt/prompt_base.txt",
       "enabled": true,
       "collect_enabled": true
     }
