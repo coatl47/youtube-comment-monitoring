@@ -1,0 +1,58 @@
+name: Reanalyze Existing Comments
+
+on:
+  workflow_dispatch:
+    inputs:
+      report_id:
+        description: '재분석할 report id (비우면 기본 report)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+concurrency:
+  group: youtube-dashboard-data-write
+  cancel-in-progress: false
+
+jobs:
+  reanalyze:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 저장소 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: 파이썬 환경 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: 필요 라이브러리 설치
+        run: pip install -r requirements.txt
+
+      - name: 기존 댓글 재분석
+        env:
+          PYTHONUNBUFFERED: "1"
+          LOG_LEVEL: INFO
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          OPENROUTER_MODEL: openai/gpt-4o-mini
+          OPENROUTER_BATCH_SIZE: 10
+          OPENROUTER_TIMEOUT: 60
+          TZ: Asia/Seoul
+        run: |
+          if [ -n "${{ inputs.report_id }}" ]; then
+            python reanalyze_existing_comments.py --report-id "${{ inputs.report_id }}"
+          else
+            python reanalyze_existing_comments.py
+          fi
+
+      - name: 결과 저장
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add analyzed_comments/
+          git diff --staged --quiet || git commit -m "Reanalyze existing comments"
+          git pull --rebase origin main
+          git push origin main
