@@ -87,7 +87,7 @@
   .legend-item .count { margin-left: auto; color: var(--muted); font-variant-numeric: tabular-nums; }
 
   .bars { display: flex; flex-direction: column; gap: 12px; }
-  .bar-row { display: grid; grid-template-columns: 74px 1fr 58px; gap: 10px; align-items: center; }
+  .bar-row { display: grid; grid-template-columns: 96px 1fr 58px; gap: 10px; align-items: center; }
   .bar-row .cat { font-size: 0.82rem; font-weight: 700; text-align: right; }
   .bar-track { display: flex; gap: 2px; height: 22px; }
   .bar-seg { border-radius: 3px; min-width: 2px; transition: opacity 0.15s; }
@@ -126,7 +126,7 @@
     .metric-row { grid-template-columns: repeat(2, 1fr); }
     .duo { grid-template-columns: 1fr; }
     .rep-columns { grid-template-columns: 1fr; }
-    .bar-row { grid-template-columns: 64px 1fr 50px; }
+    .bar-row { grid-template-columns: 88px 1fr 50px; }
   }
 
   .data-head { display: flex; align-items: baseline; gap: 10px; }
@@ -160,7 +160,7 @@
   <header class="hero">
     <div class="eyebrow">Live Chat Analysis</div>
     <h1>국민연금 라이브 방송 실시간 채팅 여론 분석</h1>
-    <p>유튜브 라이브 방송 실시간 채팅 985건을 대시보드와 동일한 기준(감성 4단계 · 분류 4종)으로 분석했습니다. 채팅에는 추천수가 없어 대표 의견은 주제 대표성과 의견 다양성 기준으로 선정했습니다.</p>
+    <p>유튜브 라이브 방송 실시간 채팅 985건을 감성 4단계 · 분류 5종 기준으로 분석했습니다. 채팅에는 추천수가 없어 대표 의견은 주제 대표성과 의견 다양성 기준으로 선정했습니다.</p>
   </header>
 
   <div class="metric-row">
@@ -199,10 +199,11 @@
       <table class="xtab">
         <thead><tr><th>분류</th><th>긍정</th><th>부정</th><th>중립</th><th>합계</th></tr></thead>
         <tbody>
-          <tr><td>기타</td><td>111</td><td>121</td><td>381</td><td>613</td></tr>
-          <tr><td>연금개혁</td><td>18</td><td>21</td><td>21</td><td>60</td></tr>
-          <tr><td>리밸런싱</td><td>1</td><td>28</td><td>9</td><td>38</td></tr>
+          <tr><td>기타</td><td>97</td><td>109</td><td>388</td><td>594</td></tr>
+          <tr><td>기금운용성과</td><td>31</td><td>16</td><td>9</td><td>56</td></tr>
+          <tr><td>국내주식투자</td><td>2</td><td>27</td><td>7</td><td>36</td></tr>
           <tr><td>퇴직연금</td><td>5</td><td>10</td><td>11</td><td>26</td></tr>
+          <tr><td>리밸런싱</td><td>0</td><td>18</td><td>7</td><td>25</td></tr>
         </tbody>
       </table>
     </section>
@@ -210,57 +211,96 @@
 
   <section class="panel">
     <h2>분류별 대표 의견</h2>
-    <p class="sub">각 분류에서 주제를 가장 잘 대표하고 관점이 겹치지 않는 채팅을 긍정·부정 최대 5건씩 골랐습니다. 인신공격·단순 비방만 담긴 채팅은 부정 의견에서 제외했습니다. 원문 표기를 그대로 유지했습니다.</p>
+    <p class="sub">각 분류에서 주제를 가장 잘 대표하고 관점이 겹치지 않는 채팅을 긍정·부정 최대 10건씩 골랐습니다. 인신공격·단순 비방만 담긴 채팅은 부정 의견에서 제외했습니다. 원문 표기를 그대로 유지했습니다.</p>
 
     <div class="rep-category">
-      <h3>리밸런싱<span class="tally">긍정 1 · 부정 28 · 중립 9</span></h3>
+      <h3>리밸런싱<span class="tally">긍정 0 · 부정 18 · 중립 7</span></h3>
+      <div class="rep-columns">
+        <div>
+          <div class="rep-col-title pos">긍정 대표 의견</div>
+          <div class="rep-empty">해당하는 의견이 없습니다.</div>
+          <p class="rep-empty" style="margin: 7px 2px 0">이 분류의 긍정 채팅이 없었습니다.</p>
+        </div>
+        <div>
+          <div class="rep-col-title neg">부정 대표 의견</div>
+          <ul class="rep-list">
+            <li><span class="rep-icon neg">❌</span>문제는… 연금이 팔아서 신장변동성이 생기는게 아니라, 연금이 리벨런싱 지금까지 미뤄서 이젠 연기금이 뭘 더 할수있는 게 적어진다는 게 문제아닌가?</li>
+            <li><span class="rep-icon neg">❌</span>국내주가 방어가 아니라... 외인들 팔아서 폭락해도 같이 팔아치우는 국민연금...</li>
+            <li><span class="rep-icon neg">❌</span>그러니제때 비중맞춰서 비중조절을했으면 이럴일이 있겟냐? 주가조작하느라 리벨런싱안한게 문제지</li>
+            <li><span class="rep-icon neg">❌</span>그때는 나라를 살리기 위해, 지금은 드러내놓고 팔아먹기</li>
+            <li><span class="rep-icon neg">❌</span>아니 왜불난집에 부채질하냐구 ㅋㅋ 왜 같이팜</li>
+            <li><span class="rep-icon neg">❌</span>어제 외인이랑 기관같이 던지더만</li>
+            <li><span class="rep-icon neg">❌</span>국민연금이 단타가 말이 돼</li>
+            <li><span class="rep-icon neg">❌</span>외인이 바닥에서 사서 올려 놓은 주식들 버릴때 연기금이 받는거 보면 화남</li>
+            <li><span class="rep-icon neg">❌</span>기관놈들은 다 개미들하고 반대로 움직이니까 욕먹는거지</li>
+            <li><span class="rep-icon neg">❌</span>그러니까 사팔 사팔 하잖아</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="rep-category">
+      <h3>국내주식투자<span class="tally">긍정 2 · 부정 27 · 중립 7</span></h3>
       <div class="rep-columns">
         <div>
           <div class="rep-col-title pos">긍정 대표 의견</div>
           <ul class="rep-list">
             <li><span class="rep-icon pos">◯</span>수십년간 국민연금 땜에 코스피가 버틴것임.</li>
+            <li><span class="rep-icon pos">◯</span>코스피 국내 규모 우리가 최대이니깐 올해도 기대할만한듯</li>
           </ul>
-          <p class="rep-empty" style="margin: 7px 2px 0">리밸런싱 분류의 긍정 채팅은 1건뿐이었습니다.</p>
+          <p class="rep-empty" style="margin: 7px 2px 0">이 분류의 긍정 채팅은 총 2건입니다.</p>
         </div>
         <div>
           <div class="rep-col-title neg">부정 대표 의견</div>
           <ul class="rep-list">
-            <li><span class="rep-icon neg">❌</span>국내주가 방어가 아니라... 외인들 팔아서 폭락해도 같이 팔아치우는 국민연금...</li>
-            <li><span class="rep-icon neg">❌</span>문제는… 연금이 팔아서 신장변동성이 생기는게 아니라, 연금이 리벨런싱 지금까지 미뤄서 이젠 연기금이 뭘 더 할수있는 게 적어진다는 게 문제아닌가?</li>
             <li><span class="rep-icon neg">❌</span>국민연금의 본연의 목적이뭐냐? 주식 시장 폭락때 지수 방어 목적도 있는거 아냐?? 지수 폭락하는데 비중꽉차있어서 지수방어도 못하고</li>
-            <li><span class="rep-icon neg">❌</span>연기금이 국장에 들어오는순간 개미들 돈 다 빨아먹는거야</li>
+            <li><span class="rep-icon neg">❌</span>와 증시 변동성을 개미들 탓으로 다 돌려버리냐?</li>
+            <li><span class="rep-icon neg">❌</span>코스피코스닥이 잘 못 하는것이 아니라 그것을 움직이는 사람들이 장난치자나요 개미주주들 한테 그러지마세요</li>
             <li><span class="rep-icon neg">❌</span>그게 국민연금이 문제야? 왜! 엄청난 돈을 위험성 자산인 주식에 넣어서.. 주가 떨어져도 그렇게 얘기하나 보자!!!</li>
+            <li><span class="rep-icon neg">❌</span>국민연금으 14% 투자를 얼마나 올렸냐? 28%? 30%? 그 많은 주식투자금을 언제 회수 하냐?</li>
+            <li><span class="rep-icon neg">❌</span>연기금이 국장에 들어오는순간 개미들 돈 다 빨아먹는거야</li>
+            <li><span class="rep-icon neg">❌</span>국민연금공단이 무슨 펀드매니저가 필요하냐 기업정보 내부정보 다 들여다보고 하는데 공매도도 친다</li>
+            <li><span class="rep-icon neg">❌</span>연금 자꾸 꽁다리에서 주식 사지 말고... 바닥에 있는 우량주들 삽시다.</li>
+            <li><span class="rep-icon neg">❌</span>국민연금이 방어도 해야지</li>
+            <li><span class="rep-icon neg">❌</span>국장은 하는게 아냐 연기금 들어가는 이유가 그런거야</li>
           </ul>
         </div>
       </div>
     </div>
-
     <div class="rep-category">
-      <h3>연금개혁<span class="tally">긍정 18 · 부정 21 · 중립 21</span></h3>
+      <h3>기금운용성과<span class="tally">긍정 31 · 부정 16 · 중립 9</span></h3>
       <div class="rep-columns">
         <div>
           <div class="rep-col-title pos">긍정 대표 의견</div>
           <ul class="rep-list">
             <li><span class="rep-icon pos">◯</span>노벨재단이 노벨이 남긴 유산으로 이렇게 일군거 보면, 국민들이 준다고 연금이 고갈되기보다, 그만큼 투자수익으로 들어오는 인컴을 늘려야할듯</li>
+            <li><span class="rep-icon pos">◯</span>국민연금 2년간 50조 벌었다 칭찬 해줘라</li>
+            <li><span class="rep-icon pos">◯</span>500조 주식으로 번거여 인마</li>
+            <li><span class="rep-icon pos">◯</span>수익률 세계1위라자나</li>
+            <li><span class="rep-icon pos">◯</span>꾸준히 수익내주는게 어디냐</li>
+            <li><span class="rep-icon pos">◯</span>여태 번돈이 얼만데 그정도 손실 날수도 있지 니가 운용해봐라</li>
             <li><span class="rep-icon pos">◯</span>계속 불려야지... 가만두면 결국 고갈로 끝인데.. 저출산이라서</li>
             <li><span class="rep-icon pos">◯</span>국민연금 수익률제고로 연금고갈 막아내자!!!</li>
-            <li><span class="rep-icon pos">◯</span>국민연금이 망하면 국가도 글로벌 경제도 망했다는 거지</li>
-            <li><span class="rep-icon pos">◯</span>예언하나 합니다 향후 30년후 출산율은 늘어나고 인구는 균형에 도달 연금고갈 걱정에서 벗어나게 됩니다</li>
+            <li><span class="rep-icon pos">◯</span>국민연금 꼭 내라... 수익률 제일 좋다</li>
+            <li><span class="rep-icon pos">◯</span>환 차익도 수익이고 실력이다</li>
           </ul>
         </div>
         <div>
           <div class="rep-col-title neg">부정 대표 의견</div>
           <ul class="rep-list">
-            <li><span class="rep-icon neg">❌</span>고갈되는 시점이 언젠가 도래한다면, 뒷 세대는 왜 국민연금을 내야하나?</li>
-            <li><span class="rep-icon neg">❌</span>연금 통합해라 누군 구멍 났는데 국민세금으로 많이 주는게 공정하냐? 연금 통합해라 아니면 국민연금도 세금 투입해서 더 많이 주던가.</li>
+            <li><span class="rep-icon neg">❌</span>그 큰돈을 굴리면서 수익이 그 정도 밖에라고?? 무능력 하다</li>
+            <li><span class="rep-icon neg">❌</span>주식에 투자한 돈은 회수 되어야 최종 수익이지.. 팔지 않은 주가로 계산하면 그게 정상인가?</li>
             <li><span class="rep-icon neg">❌</span>저게 유지 된다는 보장이 어딨냐. 무한자금 처럼 들어오니 가능한거지 유입자금 적어지면 수익률 더 어려워 그걸 이야기 안하네</li>
-            <li><span class="rep-icon neg">❌</span>선택적 가입으로 바꺼야함</li>
-            <li><span class="rep-icon neg">❌</span>100살 넘게 살아야지 돈 받게ㅋ</li>
+            <li><span class="rep-icon neg">❌</span>주식이 영원히 상향 되어서 수익율을 유지 하는것이 연금 수익이면 그게 정상 인가? 어이가 없네!!</li>
+            <li><span class="rep-icon neg">❌</span>고갈되는 시점이 언젠가 도래한다면, 뒷 세대는 왜 국민연금을 내야하나?</li>
+            <li><span class="rep-icon neg">❌</span>손해본거 수익낸거 상계해봐 고수익 아니지</li>
+            <li><span class="rep-icon neg">❌</span>안정적인 높은 수익? 아닐 걸</li>
+            <li><span class="rep-icon neg">❌</span>연기금이 그냥 일반 펀드매니저들 같이 예측 투자한다고? 지나가는 개가 웃겠다</li>
+            <li><span class="rep-icon neg">❌</span>국민연금 수익 배당좀 해라</li>
+            <li><span class="rep-icon neg">❌</span>규모가 얼만데 저것 밖에 수익을 못 낸다고?</li>
           </ul>
         </div>
       </div>
     </div>
-
     <div class="rep-category">
       <h3>퇴직연금<span class="tally">긍정 5 · 부정 10 · 중립 11</span></h3>
       <div class="rep-columns">
@@ -273,41 +313,56 @@
             <li><span class="rep-icon pos">◯</span>퇴직연금을 주식시장에 얼른 풀어야해</li>
             <li><span class="rep-icon pos">◯</span>퇴직금 괘 될텐데... 공무원연금 처럼 운영해 줘야지</li>
           </ul>
+          <p class="rep-empty" style="margin: 7px 2px 0">이 분류의 긍정 채팅은 총 5건입니다.</p>
         </div>
         <div>
           <div class="rep-col-title neg">부정 대표 의견</div>
           <ul class="rep-list">
             <li><span class="rep-icon neg">❌</span>헌법에 위배 ㅡㅡ 퇴직금 강제 DC 전환</li>
+            <li><span class="rep-icon neg">❌</span>위헌 소지가 있다</li>
             <li><span class="rep-icon neg">❌</span>금융회사들 로비 엄청 났음</li>
             <li><span class="rep-icon neg">❌</span>이제와서 강제 ㅋㅋㅋㅋ</li>
+            <li><span class="rep-icon neg">❌</span>왜 강제가 안됐을까요 ㅋㅋㅋㅋㅋ</li>
             <li><span class="rep-icon neg">❌</span>20년넘게 일 해오고 있는데 퇴직금 개인이 마련해야함</li>
             <li><span class="rep-icon neg">❌</span>한쪽은 전세금 날려, 한쪽은 퇴직금 날려. 잘하고 있다</li>
+            <li><span class="rep-icon neg">❌</span>니들 퇴직연금 압류당한다</li>
+            <li><span class="rep-icon neg">❌</span>난 반대다</li>
+            <li><span class="rep-icon neg">❌</span>어떻게 되지 않을까? 이게 말이냐</li>
           </ul>
         </div>
       </div>
     </div>
-
     <div class="rep-category">
-      <h3>기타<span class="tally">긍정 111 · 부정 121 · 중립 381</span></h3>
+      <h3>기타<span class="tally">긍정 97 · 부정 109 · 중립 388</span></h3>
       <div class="rep-columns">
         <div>
           <div class="rep-col-title pos">긍정 대표 의견</div>
           <ul class="rep-list">
             <li><span class="rep-icon pos">◯</span>이렇게 나와서 설명을 해주니 그래도 좀 좋네요</li>
             <li><span class="rep-icon pos">◯</span>우리 아버지가 국민연금 3100만원 내고 20년 넘게 1억8천7백만원 받고있지</li>
-            <li><span class="rep-icon pos">◯</span>정말로 최고의 자산운용자이신 분들 10억 이상줘도 안아깝다</li>
-            <li><span class="rep-icon pos">◯</span>꾸준히 수익내주는게 어디냐</li>
             <li><span class="rep-icon pos">◯</span>국민연금만한 연금이 없음 물가 인상율도 적용해주고... 난 10년 전부터 임의 가입으로 더 넣는중</li>
+            <li><span class="rep-icon pos">◯</span>정말로 최고의 자산운용자이신 분들 10억 이상줘도 안아깝다</li>
+            <li><span class="rep-icon pos">◯</span>성과급 많이 주고 성과 푸시 하세요</li>
+            <li><span class="rep-icon pos">◯</span>맞지 인센티브는 자본주의에 근간</li>
+            <li><span class="rep-icon pos">◯</span>국민연금이 다 하는게 아니잖아 배분해 주잖아</li>
+            <li><span class="rep-icon pos">◯</span>연금 많은게 좋은거야. 사람은 늙어서 돈이 있어야 비참하지 않아</li>
+            <li><span class="rep-icon pos">◯</span>뭘해도 욕먹어 ㅋㅋ</li>
+            <li><span class="rep-icon pos">◯</span>엄청 잘하는거야 인정할건 인정하자</li>
           </ul>
         </div>
         <div>
           <div class="rep-col-title neg">부정 대표 의견</div>
           <ul class="rep-list">
             <li><span class="rep-icon neg">❌</span>그래 열심히 파악해서 회의록 오픈 하던것을 오픈 하지 않고 있으니.. 뭔 말을 해도 알수 없게 만든것..</li>
+            <li><span class="rep-icon neg">❌</span>수사 1순위 가 국민연금 아닌가? 아무도 몰라 얼마나 투자 했는지.. 과거에는 다 오픈한 정보를 아직도 오픈 하지 않고</li>
             <li><span class="rep-icon neg">❌</span>바클레이드 보고서 환율 박살낸게 현정부 국민연금</li>
-            <li><span class="rep-icon neg">❌</span>와 증시 변동성을 개미들 탓으로 다 돌려버리냐?</li>
-            <li><span class="rep-icon neg">❌</span>국민연금 임명직 하니 눈치 너무 봄 교육장처럼 투표로 뽑아야 함</li>
             <li><span class="rep-icon neg">❌</span>레버리지 막았어야지 예상못했어?</li>
+            <li><span class="rep-icon neg">❌</span>국민연금 임명직 하니 눈치 너무 봄 교육장처럼 투표로 뽑아야 함</li>
+            <li><span class="rep-icon neg">❌</span>이제 와서 개인탓????</li>
+            <li><span class="rep-icon neg">❌</span>뭔 사명감이야 실적이지</li>
+            <li><span class="rep-icon neg">❌</span>공기업 그걸 깨야 국민이 풍요로와 줘요</li>
+            <li><span class="rep-icon neg">❌</span>대책은 말을 안하고 생중계토론방식은 아니라고 하시네요</li>
+            <li><span class="rep-icon neg">❌</span>국민돈 따가는 국민연금~~~</li>
           </ul>
         </div>
       </div>
@@ -318,7 +373,7 @@
     <strong>분석 기준</strong>
     <ul>
       <li>감성은 국민연금공단·국민연금 제도·기금 운용에 대한 태도를 기준으로 긍정 / 부정 / 중립 / 광고로 분류했습니다. 방송 패널이나 방송 자체에 대한 잡담은 중립으로 처리했습니다.</li>
-      <li>분류는 대시보드와 동일한 4종 — 리밸런싱(국내 주식 투자 비중·리밸런싱), 연금개혁(연금개혁·구조개혁·추가 모수개혁), 퇴직연금(퇴직연금·의무화·기금화·국민연금 참여), 기타 — 를 사용했습니다.</li>
+      <li>분류는 5종 — 리밸런싱(리밸런싱, 매도·매물 폭탄, 보유 주식을 내다파는 행태), 국내주식투자(국내주식·코스피 투자 비중, 지수 방어 역할, 공매도 등 투자 행태), 기금운용성과(기금운용, 수익률, 역대 최대 수익, 기금 고갈·지속가능성 전망), 퇴직연금(퇴직연금, 의무화, 기금화, 국민연금 참여), 기타(단순 응원, 영상 소감, 잡담, 광고, 보험료·수급연령 등 제도 일반, 국민연금과 무관한 내용) — 를 사용했습니다.</li>
       <li>수집 985건 중 영상 타임스탬프 등 채팅이 아닌 247건을 제외한 738건을 분석했으며, 단순 웃음·이모지 반응은 중립·기타에 포함했습니다.</li>
       <li>라이브 채팅에는 추천수 정보가 없어, 대표 의견은 추천수 대신 주제 대표성과 의견 다양성을 기준으로 선정했습니다.</li>
     </ul>
@@ -344,7 +399,7 @@
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>이렇게 나와서 설명을 해주니 그래도 좀 좋네요</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>궁밍영금</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>뭘해도 욕먹어 ㅋㅋ</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">리밸런싱</span></td><td>국민연금이 방어도 해야지</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">국내주식투자</span></td><td>국민연금이 방어도 해야지</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>정보를 다 오픈하다던것을 오픈 하지 않게 만들고 지금 얘기 한들 .. 정권 끝나고 보자!!</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>그냥 냅둬요</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>의학적 기술이 들어간 김건희 보다 자연미인 채윤경 기자가 비교 될 수 없을 정도로 이쁘다..????</td></tr>
@@ -367,10 +422,10 @@
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>의학적 기술이 들어간 김건희 보다 자연미인 채윤경 기자가 비교 될 수 없을 정도로 이쁘다..????</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>멍청하긴 정마담은 것도 모르나</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>그냥 하던데로 하겠다는거 아니냐고 ...</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>이잼업적이다 국민연금 불린거</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>이잼업적이다 국민연금 불린거</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>주가 박살났움???</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">리밸런싱</span></td><td>모르긴 뭘 몰라?? 연기금 파는게 다나오는데</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>운용자들이 더 잘 알지</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>운용자들이 더 잘 알지</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>정권 끝나면 감옥갈 1순위 국민연금</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">리밸런싱</span></td><td>떨어지면 또 삼, 정신나간 것들임</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>변동성은 홍콩etf잖아</td></tr>
@@ -379,11 +434,11 @@
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">리밸런싱</span></td><td>아니 왜불난집에 부채질하냐구 ㅋㅋ 왜 같이팜</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>개미가 이래라 저래라 ㅋㅋㅋ</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>그냥 건드리지 말라 이건데? 이해되나 ..</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">리밸런싱</span></td><td>국민연금의 본연의 목적이뭐냐? 주식 시장 폭락때 지수 방어 목적도 있는거 아냐 ?? 지수 폭락하는데 비중꽉차있어서 지수방어도 못하고 ㅋㅋ</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">국내주식투자</span></td><td>국민연금의 본연의 목적이뭐냐? 주식 시장 폭락때 지수 방어 목적도 있는거 아냐 ?? 지수 폭락하는데 비중꽉차있어서 지수방어도 못하고 ㅋㅋ</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">리밸런싱</span></td><td>팔고싶어도 못파는 상황아니냐</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>삼춘 의성이면.. 노 나 못 가리는데..</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">리밸런싱</span></td><td>어제 외인이랑 기관같이 던지더만</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>국내주가 방어가 아니라 국민들 돈 빨아먹는 국민연금..</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">국내주식투자</span></td><td>국내주가 방어가 아니라 국민들 돈 빨아먹는 국민연금..</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>장성철 개소리도 여전하네</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>오늘 매불쇼에 유시민 나온다던데?녹화방송 마쳤다고?어제부터 나온다더니 ? 최욱 이해 안됨</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>하이닉스 홍콩 etf 때문이잖아</td></tr>
@@ -408,7 +463,7 @@
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>윤경아..국가 기밀이여~`</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">리밸런싱</span></td><td>같이 팔아치웠겠지</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>건드리지 않으면 어케 불려서 주냐... 거두지말아야지</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">리밸런싱</span></td><td>외국인 수심조 연속 매도에는 연금에서 대응하는지요?</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">국내주식투자</span></td><td>외국인 수심조 연속 매도에는 연금에서 대응하는지요?</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>궁금하다고 다 알려주랴~~~</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>이제와서 개인탓이라고 하냐???? ㅋㅋ</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>신혜원이쁘다</td></tr>
@@ -462,7 +517,7 @@
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">리밸런싱</span></td><td>작년 사분기부터 팔면 죽네 사네 엄청 댓글들 달았었지ㆍ ㆍㆍ ㆍ 변죽이</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>정영진 최욱보다 훨 낫다</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>국민연금이 다 하는게 아니잖아 배분해 주잖아</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>와 증시 변동성을 개미들 탓으로 다 돌려버리냐? ㅋㅋ</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">국내주식투자</span></td><td>와 증시 변동성을 개미들 탓으로 다 돌려버리냐? ㅋㅋ</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>신부징님 이삔거 누가 머르냐고요 최윤경 몬생걌다가 더 쉬운비교 히히</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>수십년 연금 늘렷지</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>에어컨 풀로 돌릴수있나요</td></tr>
@@ -470,7 +525,7 @@
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>역시 정프로 스케일이 달라</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>성과급 더 많이 줘라 찬성</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>나 한화오션인데 망함</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>코스피코스닥이 잘 못 하는것이 아니라 그것을 움직이는 사람들이 장난치자나요개미주주들 한테 그러지마세요</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">국내주식투자</span></td><td>코스피코스닥이 잘 못 하는것이 아니라 그것을 움직이는 사람들이 장난치자나요개미주주들 한테 그러지마세요</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>국민연금은 안전성이 더 즁요하다.</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>주택문제토론을 위해 도대체 어떤방법을 쓰라고 하는건가요?토론 생중계가 마음에 안든다면요...</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>국민연금 잘하긴해</td></tr>
@@ -478,18 +533,18 @@
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>1조도 이익내기 어려운데</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>에이 그건 아니고 ... 우리나라가 무슨 미국처럼 넓냐</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>성과급 많이 줘야지</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">리밸런싱</span></td><td>그게 국민연금이 문제야? 왜! 띨빵하게 엄청난 돈을 위험성 자산인 주식에 넣어서 .. 주가 떨어져도 그렇게 얘기하나 보자!!!</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">국내주식투자</span></td><td>그게 국민연금이 문제야? 왜! 띨빵하게 엄청난 돈을 위험성 자산인 주식에 넣어서 .. 주가 떨어져도 그렇게 얘기하나 보자!!!</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>의학적 기술이 들어간 김건희 보다 자연미인 채윤경 기자가 비교 될 수 없을 정도로 이쁘다..????</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>저러니까 1황소리 듣지</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">리밸런싱</span></td><td>국민연금이 단타가 말이 돼</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">리밸런싱</span></td><td>주가조작주도 잘 사두만 ㅋㅋㅋ</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">국내주식투자</span></td><td>주가조작주도 잘 사두만 ㅋㅋㅋ</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>정말로 최고의 자산운용자이신 분들 10억 이상줘도 안아깝다</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>조욱을 어딜바교해,,정영진은 보물이다</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>정프로말에 100퍼 동감</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>국민과싸워서 이겨야 돈버는거아님~~~~~~~~~</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>잘하고 있는데 왜</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>지금도 회사를 봐야지 믿을수 있는지 없는지 동업할거 아니면 사지마시고 ㆍㆍ ㆍㆍ</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>꾸준히 수익내주는게 어디냐</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>꾸준히 수익내주는게 어디냐</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>우움....</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>미국스타일 ????????????</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>그런 식이면 모든 기관 회사 다 서울로가야지 ...</td></tr>
@@ -500,16 +555,16 @@
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>공기업이잖아</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>기금 운영 노하우 알고 경험 쌓으면 다른 증권사들이 스카우트 합니다</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>정프로 핵심 잘집으시는듯</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">리밸런싱</span></td><td>수십년간 국민연금 땜에 코스피가 버틴것임.</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">국내주식투자</span></td><td>수십년간 국민연금 땜에 코스피가 버틴것임.</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>장단이 있지</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>정영진은 상식과 지식과 균형감과 재산이 있기에 조욱처럼 가볍지 않치</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>그러면 다 서울에 있어야 됨</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>국민연금 수익 어마어마 하지</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>국민연금 수익 어마어마 하지</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>김성주 전주서 능력없다고 평가절하한다.</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>누가 뭐래도 정프로 1황 맞다</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>참나. 전주가 뭐 어때서</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>ㅋㅑ</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">리밸런싱</span></td><td>연기금 최고 수익을 내라고 강요하면 개미들이 죽는데</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">국내주식투자</span></td><td>연기금 최고 수익을 내라고 강요하면 개미들이 죽는데</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>정프로도 여의도 보내야되나 ㅋㅋㅋ</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>저거 다 개소리고 경력이 곧 돈이다</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>서울에 미친 사람듥 같아</td></tr>
@@ -565,9 +620,9 @@
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>또 잘하는 사람들 간섭질하네 ㅋㅋ</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>근데 왜 섭외한거냐 뻔한 소리만 하지 이런자리에서 뭘 이야기해</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>난 성과급 팍팍 줘도 된다고 생각함 퍼포먼스가 있으면</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>삼전닉스 떨어지면 다시 토해내면됨,</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기금운용성과</span></td><td>삼전닉스 떨어지면 다시 토해내면됨,</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>cat-orange-whistling 지방발전 정영진때문에 안돼</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>국민연금 운용하는분들이 잘해서 얄밉던데</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>국민연금 운용하는분들이 잘해서 얄밉던데</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>정영진이 진짜 똑똑하다</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>말아먹은 돈이 얼마더라</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>금액봐라 어디가서 이정도 굴려보냐 ㅋㅋㅋ</td></tr>
@@ -584,42 +639,42 @@
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>국민연금의 사유화</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>칭찬을 안한단게 아니라 잘했을대 성과 못했을땐 질책 신상필벌은 기본이지</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>국민연금 공적 기관이 정치적 영향을 안받을리가 없는데 최고가 그런 모래주머니 차고 굳이 연봉도 작</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>연기금 개고수 라니깐 ㅋㅋ</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>연기금 개고수 라니깐 ㅋㅋ</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>물가상승분 반영된건가</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>바나나씨 허위정보 ㅋㅋㅋㅋ</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>국민연금에 고액 연봉 펀드매니저 다 쓰잘데기없다. 짜고 치는 고스톱</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>나도 받겠다 ㅋ</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>주식으로 돈많이 벌었네</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>주식으로 돈많이 벌었네</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>2100년</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">연금개혁</span></td><td>고갈되는 시점이 언젠가 도래한다면, 뒷 세대는 왜 국민연금을 내야하나?</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>고갈되는 시점이 언젠가 도래한다면, 뒷 세대는 왜 국민연금을 내야하나?</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>채윤경 이쁘다!!</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>운영 원칙을 망친 연금 아닌가? 지들이 원칙을 훼손하고 숨기는 운영이 정상은 아니지요.</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>ㄷ덜덜덜 떨기까지?</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">연금개혁</span></td><td>계속 늘어날거야</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>계속 늘어날거야</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>노후걱정은 일단 해결</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>주식분석가중 정영진이 일티어 요즘은 언론인 집중</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>운영 원칙을 망친 연금 아닌가? 지들이 원칙을 훼손하고 숨기는 운영이 정상은 아니지요.</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>연금 많은게 좋은거야.사람은 늙어서 돈이 있어야 비참하지 않아</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>그 큰돈을 굴리면서 수익이 그 정도 밖에라고?? 무능력 하다</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">연금개혁</span></td><td>연금 고갈은 없다고 보면돼네</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>그 큰돈을 굴리면서 수익이 그 정도 밖에라고?? 무능력 하다</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>연금 고갈은 없다고 보면돼네</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>국민연금받고싶다</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">연금개혁</span></td><td>계속 불려야지... 가만두면 결국 고갈로 끝인데.. 저출산이라서</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">연금개혁</span></td><td>계속 늘어나지</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">연금개혁</span></td><td>경제성장이 계속 되면 더 늘어나겠지</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">연금개혁</span></td><td>face-green-smiling 노벨재단이 노벨이 남긴 유산으로 이렇게 일군거 보면, 국민들이 준다고 연금이 고갈되기보다, 그만큼 투자수익으로 들어오는 인컴을 늘려야할듯</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>금년의 수익률 기준으로 늘어나는거죠? 매년 올해와 같이 수익률이 좋을 때</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>계속 불려야지... 가만두면 결국 고갈로 끝인데.. 저출산이라서</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>계속 늘어나지</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기금운용성과</span></td><td>경제성장이 계속 되면 더 늘어나겠지</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>face-green-smiling 노벨재단이 노벨이 남긴 유산으로 이렇게 일군거 보면, 국민들이 준다고 연금이 고갈되기보다, 그만큼 투자수익으로 들어오는 인컴을 늘려야할듯</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기금운용성과</span></td><td>금년의 수익률 기준으로 늘어나는거죠? 매년 올해와 같이 수익률이 좋을 때</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>국연금 잘한다</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>운영 잘하네</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>운영 원칙을 망친 연금 아닌가? 지들이 원칙을 훼손하고 숨기는 운영이 정상은 아니지요.</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">연금개혁</span></td><td>연금 못받을 정도면 나라 망해</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">연금개혁</span></td><td>2083년이면 내자식도 받는거네face-blue-wide-eyes</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">리밸런싱</span></td><td>국장은 하는게 아냐 연기금 들어가는 이유가 그런거야</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">연금개혁</span></td><td>그래 나 죽은 다음에 고갈이다</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>연금 못받을 정도면 나라 망해</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>2083년이면 내자식도 받는거네face-blue-wide-eyes</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">국내주식투자</span></td><td>국장은 하는게 아냐 연기금 들어가는 이유가 그런거야</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기금운용성과</span></td><td>그래 나 죽은 다음에 고갈이다</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>채윤경 이쁘다</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>잼통덕에오른거지 기살았네..</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>채윤경기자님...만수무강 하소서~~~</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>정치적으로만 휘둘리지 말자</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">연금개혁</span></td><td>face-green-smiling 투자수익으로 들어오는 인컴도 잇잖냐</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>face-green-smiling 투자수익으로 들어오는 인컴도 잇잖냐</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>하여튼 18뉴이재명 양성소 장르만</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>채부장 더내세요</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>ㅠㅠ</td></tr>
@@ -628,35 +683,35 @@
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>뒷북</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>잘 하는거 아니다</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>괴벨스적 발언아님?</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">연금개혁</span></td><td>100살 넘게 살아야지 돈 받게ㅋ</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>100살 넘게 살아야지 돈 받게ㅋ</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>face-green-smiling 답답하다</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>아 망했지 ㅠㅠ 못내지</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>ㅋㅋㅋㅋ</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>이재명대통령을 연임해야 기본소득 정착합니다.</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>엄청 잘하는거야 인정할건 인정하자</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">연금개혁</span></td><td>내 자식도 문제 없구나</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>내 자식도 문제 없구나</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>언제 망하나 jtbc</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>ㅋㅋ</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">연금개혁</span></td><td>많이 내고 있다 ㅜ</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>국민연금 꼭 내라...수익률 제일 좋다</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>많이 내고 있다 ㅜ</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>국민연금 꼭 내라...수익률 제일 좋다</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>어쩐지</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">연금개혁</span></td><td>더내면 더받잖아</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>더내면 더받잖아</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>채부장 감면해주라 ㅋㅋ</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>멋져용</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>AC</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>5년 단임 짧아요</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>지는 부모 없어? 부모가 타잖아</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">연금개혁</span></td><td>연금 통합해라 누군 구멍 났는데 국민세금으로 많이 주는게 공정하냐?연금 통합해라 아니면 국민연금도 세금 투입해서 더 많이 주던가.</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>연금 통합해라 누군 구멍 났는데 국민세금으로 많이 주는게 공정하냐?연금 통합해라 아니면 국민연금도 세금 투입해서 더 많이 주던가.</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>ㅋㅋㅋ</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>ㅋㅋㅋㅋ</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>정영진 앞에서 주식 논하지. 마시길</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>고소득자만 해당</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>개미들 돈 빼먹을려고 하는게 국장이다. 펀드매니저 고액연봉으로 모셔온다? 지나가는 개가 웃겠다</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">국내주식투자</span></td><td>개미들 돈 빼먹을려고 하는게 국장이다. 펀드매니저 고액연봉으로 모셔온다? 지나가는 개가 웃겠다</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>짝짝짝</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">연금개혁</span></td><td>face-green-smiling 노벨재단식으로 운영해서 투자수익률을 엄청 늘려야죠</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>face-green-smiling 노벨재단식으로 운영해서 투자수익률을 엄청 늘려야죠</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>와이티엔 망했다 감면해주라</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>장성철씨 또여기서 똥싸냐 ?</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>규모가 얼만데 저것 밖에 수익을 못 낸다고?</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>규모가 얼만데 저것 밖에 수익을 못 낸다고?</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>소득이 없오질수도</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>기래기야 말 잘해라</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>어디서 줏어들은건 있어서 괴벨스 드립 ㅋㅋㅋㅋ</td></tr>
@@ -665,128 +720,128 @@
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>에이 기자인데 부장이면 부자여 돈잘벌어 너나 걱정해</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>진행자는 질문 그만해야 하지 않습니까? 주식시장에 더 안 좋습니다</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>모든 국민이 국민연금 가입한건 아니니까요</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">연금개혁</span></td><td>오래내야 더 받음</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>오래내야 더 받음</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>채부장 꼬박꼬박 내라</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>국민연금공단이 무슨 펀드매니저가 필요하냐 기업정보 내부정보 다 들여다보고 하는데 공매도도 친다</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>주식에 투자한 돈은 회수 되어야 최종 수익이지.. 팔지 않은 주가로 계산하면 그게 정상인가?</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">연금개혁</span></td><td>지속적으로 내야</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">연금개혁</span></td><td>저게 유지 된다는 보장이 어딨냐. 무한자금 처럼 들어오니 가능한거지 유입자금 적어지면 수익률 더 어려워 그걸 이야기 안하네</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">국내주식투자</span></td><td>국민연금공단이 무슨 펀드매니저가 필요하냐 기업정보 내부정보 다 들여다보고 하는데 공매도도 친다</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>주식에 투자한 돈은 회수 되어야 최종 수익이지.. 팔지 않은 주가로 계산하면 그게 정상인가?</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>지속적으로 내야</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>저게 유지 된다는 보장이 어딨냐. 무한자금 처럼 들어오니 가능한거지 유입자금 적어지면 수익률 더 어려워 그걸 이야기 안하네</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>기간이 중요하지</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>face-green-smiling 모든국민이 연금가입자는 아닙니다</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>채부장 월급 안밀림?</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>주식에 투자한 돈은 회수 되어야 최종 수익이지.. 팔지 않은 주가로 계산하면 그게 정상인가?</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">연금개혁</span></td><td>내돈내놔</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>국민연금도 공매도 친다고 개인만 못한다 대주거래 못해</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>주식에 투자한 돈은 회수 되어야 최종 수익이지.. 팔지 않은 주가로 계산하면 그게 정상인가?</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">연금개혁</span></td><td>정권바뀌면 또파산얘기나오겠지 ..</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>주식에 투자한 돈은 회수 되어야 최종 수익이지.. 팔지 않은 주가로 계산하면 그게 정상인가?</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>내돈내놔</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">국내주식투자</span></td><td>국민연금도 공매도 친다고 개인만 못한다 대주거래 못해</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>주식에 투자한 돈은 회수 되어야 최종 수익이지.. 팔지 않은 주가로 계산하면 그게 정상인가?</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기금운용성과</span></td><td>정권바뀌면 또파산얘기나오겠지 ..</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>ㅋㅋㅋ ㅋㅋㅋ</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>재원아 의성 망치지 마라</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>당하면 돈 잃어버리는거니 스스로 선택ㆍㆍㆍㆍ</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">연금개혁</span></td><td>불안하네</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>불안하네</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>신청해라 준다</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">연금개혁</span></td><td>내돈줘</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>@구름다리-p2w 수익률 세계1위라자나</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">연금개혁</span></td><td>선택적 가입으로 바꺼야함</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>내돈줘</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>@구름다리-p2w 수익률 세계1위라자나</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>선택적 가입으로 바꺼야함</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>그래도 연금이 제일 낫다 꼬박꼬박 넣어라</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">연금개혁</span></td><td>안내고 받는사람들은 머임</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>안내고 받는사람들은 머임</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>face-green-smiling 일반적으로 국민연금가입한 직장에 다니는 사람이 보통 받겟죠</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>내가 제일 잘한 짓...20대부터 꾸준히 연금 낸 것..</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>얌채네</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>받기만 해도 ㅋㅋ</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">리밸런싱</span></td><td>국장에 연기금 들어간거 부터 개미돈 쪽 빨아먹는거야</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">국내주식투자</span></td><td>국장에 연기금 들어간거 부터 개미돈 쪽 빨아먹는거야</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>역시 털윤경... 고소득자 face-blue-wide-eyes</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>최대치로 넣는게</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">연금개혁</span></td><td>그럼 많이 안준다는 소리네요</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">연금개혁</span></td><td>은퇴하면 최소납입 얼마인가여??</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>그럼 많이 안준다는 소리네요</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>은퇴하면 최소납입 얼마인가여??</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>그렇다면 ㅇㅈ</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>ㅇㅇ 평생백수면 연금가입자는 아니지</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>연금이 최고여!</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">연금개혁</span></td><td>연금원하면뺄수있었으면좋겠다</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>연금원하면뺄수있었으면좋겠다</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>운영 자금 거버넌스가 가장 크니</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">연금개혁</span></td><td>ㅋㅋㅋ 난 오래 냈어. 잘 챙겨주라</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">연금개혁</span></td><td>선택적으로 하면 기금운용이 되겠냐?</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">연금개혁</span></td><td>그때 진짜 많은 사람이 내가 낸거 돌려달라고 ㅈㄹ들 했지</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>ㅋㅋㅋ 난 오래 냈어. 잘 챙겨주라</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>선택적으로 하면 기금운용이 되겠냐?</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>그때 진짜 많은 사람이 내가 낸거 돌려달라고 ㅈㄹ들 했지</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>난 은퇴했는데 임의가입함ㅋㅋ</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>국민연금공단이 무슨 펀드매니저가 필요하냐 기업정보 내부정보 다 들여다보고 하는데 공매도도 친다</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">국내주식투자</span></td><td>국민연금공단이 무슨 펀드매니저가 필요하냐 기업정보 내부정보 다 들여다보고 하는데 공매도도 친다</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>우리나라 국민연금은 진자 세계 최고 맞음</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>부모님이 국민연금 수령하시는데,,,그걸보면 전 연금을 믿습니다 face-green-smiling</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>20대부터 ? 나이쑤</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>10년전엔 전세사기 안당했을때고</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>손해본거 수익낸거 상계해봐 고수익 아니지</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">연금개혁</span></td><td>다 빠져버리면 기금운용이 되겠어?</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">연금개혁</span></td><td>나는 지금이라도 받고 싶다</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>손해본거 수익낸거 상계해봐 고수익 아니지</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>다 빠져버리면 기금운용이 되겠어?</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>나는 지금이라도 받고 싶다</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">리밸런싱</span></td><td>리밸런싱 되었나봄</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>face-green-smiling 전 국민연금 좋아하고 꾸준히 납부합니다</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>잘 불러주세요</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">연금개혁</span></td><td>지금당장죽것는데노후가뭔말이고</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">연금개혁</span></td><td>돌려주세요 ~</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>지금당장죽것는데노후가뭔말이고</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>돌려주세요 ~</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>조국한테는 중요하죠</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>엄청 젊잔으시네...믿음이 가네요</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>돌려도</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>부동산은 이재명도 대책이 없는가 보다.</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>정영진한테 돈주기 vs 국민연금에 돈주시</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">리밸런싱</span></td><td>연기금이 국장에 들어오는순간 개미들 돈 다 빨아먹는거야</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">국내주식투자</span></td><td>연기금이 국장에 들어오는순간 개미들 돈 다 빨아먹는거야</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>20대부터 그냥 나 죽었소 하고 연금 냈어요...나 창찬해</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">연금개혁</span></td><td>예언하나 합니다 향후 30년후 출산율은 늘어나고 인구는 균형에 도달 연금고갈 걱정에서 벗어나게 됩니다. 인구증가 계기는 내국인 출산율 소폭 증가및 이민이고</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>예언하나 합니다 향후 30년후 출산율은 늘어나고 인구는 균형에 도달 연금고갈 걱정에서 벗어나게 됩니다. 인구증가 계기는 내국인 출산율 소폭 증가및 이민이고</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>face-green-smiling 전 나중에 받는거 기대해요. 저희 부모님도 받으시는데 연금이 노후에 도움이 많이 됩니다</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>범인을 찾았다</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>자심감보소 얄밉네</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">연금개혁</span></td><td>65세에 받나 나이별로 차이는 있지만</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>주식이 영원히 상향 되어서 수익율을 유지 하는것이 연금 수익이면 그게 정상 인가? 어이가 없네!!</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>65세에 받나 나이별로 차이는 있지만</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>주식이 영원히 상향 되어서 수익율을 유지 하는것이 연금 수익이면 그게 정상 인가? 어이가 없네!!</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>수부해가 뭐야?</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>왜냐면 제가 기간은 그리 길지는 않아서 중간에 짤리고 여러형태로 그만두고 해서</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>이재명효과는 맞지</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>부정적인 시각은 뭐여?</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">연금개혁</span></td><td>국민연금 십수년동안 못 받을일 없다고 하는데 ㆍㆍㆍㆍ각자 판단이니 뭐 어쩔수없지</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기금운용성과</span></td><td>국민연금 십수년동안 못 받을일 없다고 하는데 ㆍㆍㆍㆍ각자 판단이니 뭐 어쩔수없지</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>국민연금 같은 보험이 어딨냐?? 비교해봐라</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>정프로 혼내줘 얄미워</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>국민연금 직장 20 년퇴직후. 탈때까지 2년더불입 현재 매달 70 받는 할미입니다 좋아요</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>9만원내고 몇십년뒤에 35만원씩 평생 작지만 노후엔 큰돈 입니다. 첫국민연금 낸사람이 그러데요 ㅋ 김대중대통령</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>코스피봐라</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">국내주식투자</span></td><td>코스피봐라</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>오</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>코스피 국내 규모 우리가 최대이니깐 올해도 기대할만한듯</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">국내주식투자</span></td><td>코스피 국내 규모 우리가 최대이니깐 올해도 기대할만한듯</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>지금 당장 죽을거 같아도 노후는 대비 해야지 ...</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>눈가리오 아웅이라고 본다</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">연금개혁</span></td><td>국민연금 수익률제고로 연금고갈 막아내자!!!♡♡♡♡♡</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">연금개혁</span></td><td>투자수익률을 더 높여서 재투자 재투자 복리투자 해야죠 국민연금 화이팅 face-green-smiling</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>국민연금 수익률제고로 연금고갈 막아내자!!!♡♡♡♡♡</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>투자수익률을 더 높여서 재투자 재투자 복리투자 해야죠 국민연금 화이팅 face-green-smiling</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">리밸런싱</span></td><td>국민연금이 다 털어먹고 나갔구만</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>묵직하신게 저유ㅡ로와는 정반대로 믿음이 가요</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>영진아 개소리도 적당히 해라 무슨 고액 연봉 펀드매니저를 모셔와서 주식투자를 시키냐 다 짜고 치는 고스톱인뎅</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>난 7년전 연금해약하고 주식 샀는데 꿀꿀꿀</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>다른나라화폐도 가지고 잇지 않나? eyes-purple-crying 연금은</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">연금개혁</span></td><td>많이 안준다는 소리를 길게 들었네요 알겠어요 낸만큼 받는건 맞으니까 일정기간 산정하에</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>많이 안준다는 소리를 길게 들었네요 알겠어요 낸만큼 받는건 맞으니까 일정기간 산정하에</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>질문 좋아요</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>국민을 바보로 아는 국민연금은 회의록 오픈 해라!!</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>연금 60낸당</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>개인연금보다 국민연금이 몇배는 나아</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>장성철 평론가 진영과 정파를 떠나 정치책략가로는 괜찮은듯 실력있는 분이라고 생각됨</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">연금개혁</span></td><td>연금해약안되요, 일시수령도 안되고</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>연금해약안되요, 일시수령도 안되고</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>잡았다 이놈</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>안정적인 높은 수익? 아닐 걸</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>연금아저씨 하닉 샀어?안샀어?</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>국민연금수익률 중요하지</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">연금개혁</span></td><td>수입 없으면 임의가입 9만원임??</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>환 차익도 수익이 고 실력이다</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>안정적인 높은 수익? 아닐 걸</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">국내주식투자</span></td><td>연금아저씨 하닉 샀어?안샀어?</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>국민연금수익률 중요하지</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>수입 없으면 임의가입 9만원임??</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>환 차익도 수익이 고 실력이다</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>늙어서 내가 내 앞가림을 해야 자식들도 편한거다.</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>ㅎㅎㅎ</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>난 7년전 연금해약하고 주식 샀는데 꿀꿀꿀</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>연금이 효자여 ~꼭 필요</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>지금도 딴지거는 인간들 저사람들도 연금 줄텐데 심보좀 좋게 씁시다</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>젊어서는 허리띠 졸라메고 연금 많이 넣으세요!</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>영진아 연기금이 내부정보 기업정보로 다 보고 투자하고 공매도도 치는데 무슨 고액연봉드립이냐 ㅋ</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">국내주식투자</span></td><td>영진아 연기금이 내부정보 기업정보로 다 보고 투자하고 공매도도 치는데 무슨 고액연봉드립이냐 ㅋ</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>올라서95000이에요</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>자유어맞겼으면좋겠디ㅣ</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>달러만 가지 고 있어도 돈범</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>국민연금공단이 무슨 펀드매니저가 필요하냐 기업정보 내부정보 다 들여다보고 하는데 공매도도 친다</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">국내주식투자</span></td><td>국민연금공단이 무슨 펀드매니저가 필요하냐 기업정보 내부정보 다 들여다보고 하는데 공매도도 친다</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>잼통이 대통령되니 정부기관들이 일을 잘하네</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>금융위 보고 레버리지 ETF 답변은 회피하네</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>그러구나 face-fuchsia-wide-eyes</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">연금개혁</span></td><td>정프로 국민연금 유입자금 국민연금 세금 줄어드는 시점이 언제부터인지 물어봐. 들어오는 돈보다 나가는 돈 많인지는 시점</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기금운용성과</span></td><td>정프로 국민연금 유입자금 국민연금 세금 줄어드는 시점이 언제부터인지 물어봐. 들어오는 돈보다 나가는 돈 많인지는 시점</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>정청래는 정명석이랑 똑같이 생겼네요</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>영진이 수준보소 저리 설명해도 개소리 하네</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">리밸런싱</span></td><td>사팔사팔 개미 다털어먹은 국민연금 ㅋㅋ</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>달러 바꿀때 전략적으로 바꾸나요? 기계적으로 바꾸나요?</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">연금개혁</span></td><td>나때까지만 받으면 상관없다. 후대애들은 알아서 하라고 해라</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>나때까지만 받으면 상관없다. 후대애들은 알아서 하라고 해라</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>방패막이로 데려온건가?</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>face-orange-frowning 다 자기 기준에서 판단하는거죠, 가짜뉴스 판치는</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>헛소리 하는 애들 싹다 처벌해야</td></tr>
@@ -794,12 +849,12 @@
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>한전이나 국민연금이나 맨날 투자하고 개실패하고 구라치네</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>face-orange-frowning 가짜뉴스는 각자의 이익에따라 만들어지는듯</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>바나나님 거짓ㄱ정보 징역 살아여</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>연기금도 공매도 친다고 알아봐라</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">국내주식투자</span></td><td>연기금도 공매도 친다고 알아봐라</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>국민연금 고맙다 ㅋㅋ 기대 안한돈</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>그러니까 전문가도 아니면서 전문가인척 하는 사람들 걸러야지</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>그걸 제외한다고 하니</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>연금은 환율 신경 안쓰고 그때그때 환전합니다</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">연금개혁</span></td><td>부부중에한명은해약할수있었으면좋겠다</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>부부중에한명은해약할수있었으면좋겠다</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>채윤경 이쁘다hand-pink-waving</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>연금재정에 환율로인한 거품가능성??</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>정프로 시사1황이맞다</td></tr>
@@ -809,19 +864,19 @@
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>의학적 기술이 들어간 김건희 보다 자연미인 채윤경 기자가 비교 될 수 없을 정도로 이쁘다..????</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>넘필요함~~목돈</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>오늘잘 나오셨네</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>연기금이 그냥 일반 펀드매니저들 같이 예측 투자한다고? 지나가는 개가 웃겠다</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>연기금이 그냥 일반 펀드매니저들 같이 예측 투자한다고? 지나가는 개가 웃겠다</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>H</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>연금아저씨 삼전하닉 샀어 안샀어</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">국내주식투자</span></td><td>연금아저씨 삼전하닉 샀어 안샀어</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>초!! 고가!! 라잖아. 50억 이상의 아파트를 말하는 거다. 그냥 서울에서 비싸면 기본 40억 이상임.</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>뭔 개소리야</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">리밸런싱</span></td><td>국민연금으 14% 투자를 얼마나 올렸냐? 28% ? 30% ? 그 많은 주식투자금을 언제 회수 하냐?</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">국내주식투자</span></td><td>국민연금으 14% 투자를 얼마나 올렸냐? 28% ? 30% ? 그 많은 주식투자금을 언제 회수 하냐?</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>face-green-smiling노벨재단, 국민연금 투자법으로 개인연금저축 포트폴리오 짜고 싶어요</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>그게 보험형태거든요</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">연금개혁</span></td><td>그때 가서 잘못했어요 해도 늦어요</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>그때 가서 잘못했어요 해도 늦어요</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>최윤경 예쁘다</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>그걸 왜 얘기해 ㅋㅋ</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>국민연금 생각보다 잘하더라</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">연금개혁</span></td><td>파산이지</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>파산이지</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>국민연금 다 세제혜택 받잖아 손해볼거 없다</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>홈플러스</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>나이 들면 다달이 꼬박꼬박 들어오는 게 얼마나</td></tr>
@@ -831,22 +886,22 @@
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>응원합니다</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>국민연금 니들이 잘해서 돈번줄아네\</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>반정부세력이 흔드는거지</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">연금개혁</span></td><td>프랑스봐라 연금수령결국 늦췄더만</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>프랑스봐라 연금수령결국 늦췄더만</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>나이가 들어서 손가락이 짧아서 타자글 하나 덜친다 반말이라 미안</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>흔들리지 마세요</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>어차피 국민돈으로 하는거잖아</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>내돈들어있는데 비판해야지 당연히</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>정영진 진짜 무식하네 연기금이 무슨 투자해서 막대한 이익이나 손해가 있을거 같냐 국미연금 직원 고액 연봉 드립은 완전 개소리다 연기금은 월래 은밀하게 해서 이익보고 빠진다. 음흉하게 다 들여다 보고 투자하지 국민들을 개돼지로 보네</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">국내주식투자</span></td><td>정영진 진짜 무식하네 연기금이 무슨 투자해서 막대한 이익이나 손해가 있을거 같냐 국미연금 직원 고액 연봉 드립은 완전 개소리다 연기금은 월래 은밀하게 해서 이익보고 빠진다. 음흉하게 다 들여다 보고 투자하지 국민들을 개돼지로 보네</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>신셰계는 2 사장이있고</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>여기 패널들은 사람이름 부를때 호칭도 불러주는 예의를 갖자~ 여기 패널들은 사람이름 부를때 호칭도 불러주는 예의를 갖자~ 여기 패널들은 사람이름 부를때 호칭도 불러주는 예의를 갖자~ 여기 패널들은 사람이름 부를때 호칭도 불러주는 예의를 갖자~ 여기 패널들은 사람이름 부를때 호칭도 불러주는 예의를 갖자~</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>국민연금 자금이 국민들 돈이야 머청하긴</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>국민연금이 잘해야 우리나라도 선진국지수에 포함됩니다</td></tr>
         <tr><td><span class="badge-sent ad">광고</span></td><td><span class="badge-cat">기타</span></td><td>애플 、 오늘이 막차 입니다 　。</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>국민연금 ㅡㅡㅡㅡㅡ 2년간 50“조 벌었다 ㅡㅡㅡㅡ 칭찬 해줘라</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>국민연금 ㅡㅡㅡㅡㅡ 2년간 50“조 벌었다 ㅡㅡㅡㅡ 칭찬 해줘라</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>의학적 기술이 들어간 김건희 보다 자연미인 채윤경 기자가 비교 될 수 없을 정도로 이쁘다..😁😁</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>그럼 개인돈으로 하겠냐 기금인데</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>여태 번돈이 얼만데 그정도 손실 날수도 있지 니가 운용해봐라</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>그럼 누가 잘해서 번거냐?? 잘한건 잘했다고 해줘라</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기금운용성과</span></td><td>그럼 개인돈으로 하겠냐 기금인데</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>여태 번돈이 얼만데 그정도 손실 날수도 있지 니가 운용해봐라</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>그럼 누가 잘해서 번거냐?? 잘한건 잘했다고 해줘라</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>용남이 당 또 옮기나</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>너나 도배질이나 하지마</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>내돈들어가는데 당연히 말나올수있지 말도못하게하면 어떻게하라는건지</td></tr>
@@ -856,7 +911,7 @@
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>국민연금이 뭘 잘해</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>제일 궁금한거다</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>여기 패널들은 사람이름 부를때 호칭도 불러주는 예의를 갖자~ 특히 김준일, 장성철과 누군지 모르는 사람</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>연기금도 공매도 치고 내부정보 다 들여다보고 투자한다. 개미들 돈 다 빨아먹는다</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">국내주식투자</span></td><td>연기금도 공매도 치고 내부정보 다 들여다보고 투자한다. 개미들 돈 다 빨아먹는다</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>직장인들 매달 원천징수도 떼가는 내 돈이라고 멍청아</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>뭘 했는데 국민연금이</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>헛소리 범인이네 ㅋ</td></tr>
@@ -864,32 +919,32 @@
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>국민연금 건방지다</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>한것도 없어</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>그걸 구분해봐야지 사기업처럼 사고해서 비판하면 한도 끝도 없지</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>500조 벌었어 인마</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>500조 벌었어 인마</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>용남이 아우 금감원장하면 잘할거예요</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>왜이렇게 못배운 것들이 많지.. 뭐 어차피 징징이들 몇줄 글쓰고 아무도 안봐주겠지만</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>세제혜택 받잖아</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>삼전 노조의 인센티브 요구, 호남 반도체 이전 반대 등에 대해서 주주로서 국민연금에서 의견을 줄 수 없나요?</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">연금개혁</span></td><td>국민연금 고갈위기 우려를 고조시킨건 유시민이란거 다들 아시나요?</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">국내주식투자</span></td><td>삼전 노조의 인센티브 요구, 호남 반도체 이전 반대 등에 대해서 주주로서 국민연금에서 의견을 줄 수 없나요?</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기금운용성과</span></td><td>국민연금 고갈위기 우려를 고조시킨건 유시민이란거 다들 아시나요?</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>형 잠깐 자고 올께</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>정영진 진짜 무식하네 연기금이 무슨 투자해서 막대한 이익이나 손해가 있을거 같냐 고액 연봉 드립은 개소리다 연기금은 월래 은밀하게 해서 이익보고 빠진다. 음흉하게 다 들여다 보고 투자하지 국민들을 개돼지로 보네</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">국내주식투자</span></td><td>정영진 진짜 무식하네 연기금이 무슨 투자해서 막대한 이익이나 손해가 있을거 같냐 고액 연봉 드립은 개소리다 연기금은 월래 은밀하게 해서 이익보고 빠진다. 음흉하게 다 들여다 보고 투자하지 국민들을 개돼지로 보네</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>스토커 &#x27;:;,:&#x27;&#x27; 쩔래형 &#x27;&quot;:;:이잼이&quot; 싫타 잖아. &#x27;&quot;;;;:&quot;뭘 지켜줘????&quot;&quot;ㅋㅋㅋㅋㅋㅋ</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>정영진 진짜 잘한다 👍</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>이번 장에선 나라도 잘하겠다</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>500조 주식으로 번거여 인마</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>500조 주식으로 번거여 인마</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">리밸런싱</span></td><td>이번 코스피 반등 7700오면 다시 던지거라</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>낸만큼 세제혜택 보자나</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>정프로라 히지 정프로님이리. 하나</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>그냥 서면으로 팩스 넣어라 개 지루하내</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>김용남 검찰 총장 되서 문조털래유 개박살내고cat-orange-whistlingcat-orange-whistling</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">연금개혁</span></td><td>국민연금도 직장인들은 회사에서 반 내주지않나??</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>국민연금도 직장인들은 회사에서 반 내주지않나??</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>뭘 자꾸 의심하냐</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>난 내가 다낸다</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>연금은 그냥 국민연금이 최고다</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>5천 넘어갈 무렵에 돈 못번 사람 손들어 봐 등신 인증 하면서</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>연금아저씨 삼전하닉 샀어 안샀어</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">국내주식투자</span></td><td>연금아저씨 삼전하닉 샀어 안샀어</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>왜 나왔냐</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>나도 내가 다 냄</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">연금개혁</span></td><td>회사에서 반 내주는것도 짜피 내 소득여</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>회사에서 반 내주는것도 짜피 내 소득여</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>무서운 집착 &quot;:;;쩔래형&quot;&quot;스토커. 30번 했다메. &quot;::???ㅎㅎㅎㅎㅎ</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>김용남은 성정이 검찰총장 깜이아님다</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>ㅋㅋㅋㅋㅋㅋㅋ</td></tr>
@@ -925,7 +980,7 @@
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>뉘예뉘예</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>의학적 기술이 들어간 김건희 보다 자연미인 채윤경 기자가 비교 될 수 없을 정도로 이쁘다..😁😁</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>ㅋㅋㅋ</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">연금개혁</span></td><td>파산</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>파산</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>무거운 주제인데. 영진님. ㅎ</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>ㅋㅋㅋㅋ ㅋㅋㅋㅋ 어떻게 해</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>우리라라 공화국 서열 35위 1조 사태로 정리되네</td></tr>
@@ -933,11 +988,11 @@
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">퇴직연금</span></td><td>니들 퇴직연금 압류당한다</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>털보공장 가면 된다 털윤경</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">퇴직연금</span></td><td>이제와서 강제 ㅋㅋㅋㅋㅋㅋㅋ</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">리밸런싱</span></td><td>연금 자꾸 꽁다리에서 주식 사지 말고... 바닥에 있는 우량주들 삽시다.</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">국내주식투자</span></td><td>연금 자꾸 꽁다리에서 주식 사지 말고... 바닥에 있는 우량주들 삽시다.</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>쓰레기들 문조털래유 얘기할까?</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">퇴직연금</span></td><td>어떻게 되지 않을까? 이게 말이냐</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">퇴직연금</span></td><td>왜 ㄱ ㅏㅇ제가 안됐을까요ㅕ ㅋㅋㅋㅋㅋ</td></tr>
-        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">연금개혁</span></td><td>국민연금 개인노후자금확보 다 필요하죠 국민연금 만으로는 부족하죠</td></tr>
+        <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>국민연금 개인노후자금확보 다 필요하죠 국민연금 만으로는 부족하죠</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>스토커 &#x27;:;,:&#x27;&#x27; 쩔래형 &#x27;&quot;:;:이잼이&quot; 싫타 잖아. &#x27;&quot;;;;:&quot;뭘 지켜줘????&quot;&quot;ㅋㅋㅋㅋㅋㅋ</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>우서?</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">퇴직연금</span></td><td>금융회사들 로비 엄청 났음</td></tr>
@@ -958,7 +1013,7 @@
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>이재명 까줄테니깐</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>채부장 힘내요~</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">퇴직연금</span></td><td>맞네 회사가 망해도 퇴직연금은 지켜야지</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>정영진 진짜 무식하네 연기금이 무슨 투자해서 막대한 이익이나 손해가 있을거 같냐 주식투자직원들 고액 연봉 드립은 개소리다 연기금은 월래 은밀하게 해서 이익보고 빠진다. 음흉하게 다 들여다 보고 투자하지 국민들을 개돼지로 보네</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">국내주식투자</span></td><td>정영진 진짜 무식하네 연기금이 무슨 투자해서 막대한 이익이나 손해가 있을거 같냐 주식투자직원들 고액 연봉 드립은 개소리다 연기금은 월래 은밀하게 해서 이익보고 빠진다. 음흉하게 다 들여다 보고 투자하지 국민들을 개돼지로 보네</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>조불쇼 있잖아</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">퇴직연금</span></td><td>난 반대다</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>자기만 프리랜서라고 말야</td></tr>
@@ -990,7 +1045,7 @@
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">퇴직연금</span></td><td>20년 퇴직금을</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>ㅋㅋㅋ</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>홍명보가 사장임</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">리밸런싱</span></td><td>연기금이 들어간 주식은 개미들이 투자하는게 아냐 개미들 돈 쪽 빨아먹고 빠진다</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">국내주식투자</span></td><td>연기금이 들어간 주식은 개미들이 투자하는게 아냐 개미들 돈 쪽 빨아먹고 빠진다</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>역시 정프로</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">퇴직연금</span></td><td>퇴직금 어케 하누</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>웃는게 웃는게 아니다</td></tr>
@@ -1013,7 +1068,7 @@
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>월드컵은 JTBC ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">퇴직연금</span></td><td>20년넘게 일 해오고 있는데 퇴직금 개인이 마련해야함</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>연기금은 공매도도 치고 내부정보 훤히 보고 투자한다. 개인이 이길수가 없어</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">국내주식투자</span></td><td>연기금은 공매도도 치고 내부정보 훤히 보고 투자한다. 개인이 이길수가 없어</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>내 노후 박스야</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>니가더 이상해</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>어디가서 그 이야기 하지 말고 낸만큼 돌려주고 싶다는 느낌으로 말하세요</td></tr>
@@ -1028,13 +1083,13 @@
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>우리회사는 좋은 회사네...</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>영업까지 ㄷㄷㄷㄷ</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>김어준 채기자한테 질문 받으면 당황할텐데</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>연기금 주식투자하는게 뭐 자랑이라고 나와서 이짓거리하냐</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">국내주식투자</span></td><td>연기금 주식투자하는게 뭐 자랑이라고 나와서 이짓거리하냐</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>ㅋㅋㅋㅎㅎㅎ</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>아 하</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>ㅋㅋㅋㅋㅋㅋㅋ</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>아이고야</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">연금개혁</span></td><td>국민연금 수익 배당좀 해라</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">연금개혁</span></td><td>에이..말은 바로해야지....국민연금 주면서 소득 잡아부러 세금때가잔여.....ㅡㅡa</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>국민연금 수익 배당좀 해라</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>에이..말은 바로해야지....국민연금 주면서 소득 잡아부러 세금때가잔여.....ㅡㅡa</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>장르만은 살아야지</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>나는 임마 장동혁 대표님 정청래 대표님 김어준 공장장님 최욱진행자님 하냐? 똥혁이 털래 털보 조욱이 하냐?</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>이재명씨 때와 상황따라 진지할때는 웃음끼 빼고 일하세요</td></tr>
@@ -1051,8 +1106,8 @@
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>애잔하다 ㅋㅋㅋㅋ</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>의학적 기술이 들어간 김건희 보다 자연미인 채윤경 기자가 비교 될 수 없을 정도로 이쁘다..😁😁</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>국내 자산운영사 설립 규제 철 ㅍ 하고.....국내 자산 운영서 수백개 이상 설립해 연금/ 위탁 금액 분산해 장기투자 유도해야 한다....face-blue-wide-eyesface-blue-wide-eyesface-blue-wide-eyes</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">연금개혁</span></td><td>아직 최소 2억 3천 모자른데 평온한 노후라니까 뭔 소리야</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">연금개혁</span></td><td>국민연금이 망하면 국가도 글로벌 경제도 망했다는 거지 ㅋㅋㅋㅋㅋㅋㅋㅋ</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>아직 최소 2억 3천 모자른데 평온한 노후라니까 뭔 소리야</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>국민연금이 망하면 국가도 글로벌 경제도 망했다는 거지 ㅋㅋㅋㅋㅋㅋㅋㅋ</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>ㅋㅋㅋㅋㅋㅋㅋㅋ</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>털윤경 겸공으로 이직 추천</td></tr>
         <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>정치상관 없다더니 왜 이재명 정부를 찾냐고</td></tr>
@@ -1062,9 +1117,9 @@
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>조국 대통령???? 소가 웃을 일입니다 ㅋㅋㅋㅋ ㅋㅋㅋㅋ ㅋㅋㅋㅋ</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>털윤경face-orange-frowningface-orange-frowningface-orange-frowningface-orange-frowningface-orange-frowning</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>연금공단 ㅋㅋㅋㅋㅋㅋㅋ</td></tr>
-        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">연금개혁</span></td><td>국민연금이 망하면 나라 망한거지</td></tr>
+        <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기금운용성과</span></td><td>국민연금이 망하면 나라 망한거지</td></tr>
         <tr><td><span class="badge-sent pos">긍정</span></td><td><span class="badge-cat">기타</span></td><td>좋죠</td></tr>
-        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">기타</span></td><td>정영진 진짜 무식하네 연기금이 무슨 투자해서 막대한 이익이나 손해가 있을거 같냐 고액 연봉 드립은 개소리다 연기금은 월래 은밀하게 해서 이익보고 빠진다. 음흉하게 다 들여다 보고 투자하지 국민들을 개돼지로 보네</td></tr>
+        <tr><td><span class="badge-sent neg">부정</span></td><td><span class="badge-cat">국내주식투자</span></td><td>정영진 진짜 무식하네 연기금이 무슨 투자해서 막대한 이익이나 손해가 있을거 같냐 고액 연봉 드립은 개소리다 연기금은 월래 은밀하게 해서 이익보고 빠진다. 음흉하게 다 들여다 보고 투자하지 국민들을 개돼지로 보네</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>장르만 영진이형이 인수하자</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>이재명은 지금 상황파악이 안되는중</td></tr>
         <tr><td><span class="badge-sent neu">중립</span></td><td><span class="badge-cat">기타</span></td><td>영업왕</td></tr>
@@ -1114,10 +1169,11 @@
 
     // 분류별 스택 바
     const cross = [
-      { cat: '기타', pos: 111, neg: 121, neu: 381 },
-      { cat: '연금개혁', pos: 18, neg: 21, neu: 21 },
-      { cat: '리밸런싱', pos: 1, neg: 28, neu: 9 },
+      { cat: '기타', pos: 97, neg: 109, neu: 388 },
+      { cat: '기금운용성과', pos: 31, neg: 16, neu: 9 },
+      { cat: '국내주식투자', pos: 2, neg: 27, neu: 7 },
       { cat: '퇴직연금', pos: 5, neg: 10, neu: 11 },
+      { cat: '리밸런싱', pos: 0, neg: 18, neu: 7 },
     ];
     const max = Math.max(...cross.map(row => row.pos + row.neg + row.neu));
     const barsEl = document.getElementById('bars');
