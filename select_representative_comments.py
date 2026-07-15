@@ -21,8 +21,8 @@ logger = logging.getLogger(__name__)
 
 REPRESENTATIVE_DIR = Path("representative_comments")
 TARGET_SENTIMENTS = ["긍정", "부정"]
-CANDIDATE_POOL_SIZE = 40
-SELECTION_COUNT = 5
+CANDIDATE_POOL_SIZE = 60
+SELECTION_COUNT = 10
 PROMPT_TEXT_LIMIT = 300
 
 SELECTION_PROMPT_TEMPLATE = """당신은 유튜브 댓글 여론 분석 전문가입니다.
