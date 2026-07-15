@@ -22,7 +22,9 @@ CATEGORY_ALIAS_MAP = {
     "수익률": "기금운용성과",
     "퇴직연금": "퇴직연금",
     "기금화": "퇴직연금",
-    "기타": "기타",
+    "기관 운영 등 기타": "기관 운영 등 기타",
+    "기관 운영": "기관 운영 등 기타",
+    "기타": "기관 운영 등 기타",
 }
 
 
@@ -45,7 +47,7 @@ def normalize_sentiment_label(sentiment: str | None) -> str:
 
 def normalize_category_label(category: str | None) -> str:
     value = (category or "").strip()
-    return CATEGORY_ALIAS_MAP.get(value, "기타")
+    return CATEGORY_ALIAS_MAP.get(value, "기관 운영 등 기타")
 
 
 def get_positive_int_env(name: str, default: int) -> int:
