@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="ko">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>국민연금 라이브 채팅 여론 분석</title>
+<style>
+  :root {
+    --primary: #185ABD;
+    --primary-deep: #123F85;
+    --ground: #EDF1F8;
+    --card: #FFFFFF;
+    --ink: #1E2A3A;
+    --muted: #5D6B80;
+    --line: rgba(93, 107, 128, 0.18);
+    --chip: #F2F5FA;
+    --pos: #16A34A;
+    --neg: #DC2626;
+    --neu: #8494A9;
+    --hero-ink: #FFFFFF;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #0E1520;
+      --card: #172231;
+      --ink: #E6ECF5;
+      --muted: #98A6BA;
+      --line: rgba(152, 166, 186, 0.22);
+      --chip: #1E2B3D;
+      --pos: #2FBF63;
+      --neg: #F05252;
+      --neu: #72859C;
+    }
+  }
+  :root[data-theme="light"] {
+    --ground: #EDF1F8; --card: #FFFFFF; --ink: #1E2A3A; --muted: #5D6B80;
+    --line: rgba(93, 107, 128, 0.18); --chip: #F2F5FA;
+    --pos: #16A34A; --neg: #DC2626; --neu: #8494A9;
+  }
+  :root[data-theme="dark"] {
+    --ground: #0E1520; --card: #172231; --ink: #E6ECF5; --muted: #98A6BA;
+    --line: rgba(152, 166, 186, 0.22); --chip: #1E2B3D;
+    --pos: #2FBF63; --neg: #F05252; --neu: #72859C;
+  }
+
+  * { box-sizing: border-box; }
+  html { background: var(--ground); }
+  body {
+    margin: 0;
+    font-family: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", "Segoe UI", sans-serif;
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  .shell { max-width: 1060px; margin: 0 auto; padding: 20px 18px 56px; display: flex; flex-direction: column; gap: 16px; }
+
+  .hero {
+    background: linear-gradient(118deg, var(--primary-deep), var(--primary) 62%, #2E77DF);
+    border-radius: 18px;
+    padding: 26px 28px 24px;
+    color: var(--hero-ink);
+  }
+  .hero .eyebrow { font-size: 0.76rem; font-weight: 700; letter-spacing: 0.12em; opacity: 0.82; text-transform: uppercase; }
+  .hero h1 { margin: 6px 0 8px; font-size: 1.55rem; font-weight: 800; letter-spacing: -0.01em; text-wrap: balance; }
+  .hero p { margin: 0; font-size: 0.9rem; opacity: 0.88; max-width: 62ch; }
+
+  .metric-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .metric {
+    background: var(--card); border-radius: 14px; padding: 14px 16px;
+    border: 1px solid var(--line);
+  }
+  .metric .label { font-size: 0.78rem; font-weight: 700; color: var(--muted); }
+  .metric .value { font-size: 1.5rem; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+  .metric .note { font-size: 0.74rem; color: var(--muted); }
+  .metric .value .unit { font-size: 0.9rem; font-weight: 700; color: var(--muted); margin-left: 2px; }
+
+  .panel { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px 20px; }
+  .panel h2 { margin: 0 0 2px; font-size: 1.02rem; font-weight: 800; }
+  .panel .sub { margin: 0 0 14px; font-size: 0.8rem; color: var(--muted); }
+  .duo { display: grid; grid-template-columns: 5fr 7fr; gap: 16px; align-items: stretch; }
+
+  .donut-wrap { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .donut-center-label { font-size: 0.72rem; fill: var(--muted); font-weight: 600; }
+  .donut-center-value { font-size: 1.15rem; font-weight: 800; fill: var(--ink); }
+  .legend { display: flex; flex-direction: column; gap: 8px; min-width: 150px; flex: 1; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.84rem; }
+  .legend-item .swatch { width: 11px; height: 11px; border-radius: 3.5px; flex: 0 0 auto; }
+  .legend-item .name { font-weight: 700; }
+  .legend-item .count { margin-left: auto; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+  .bars { display: flex; flex-direction: column; gap: 12px; }
+  .bar-row { display: grid; grid-template-columns: 74px 1fr 58px; gap: 10px; align-items: center; }
+  .bar-row .cat { font-size: 0.82rem; font-weight: 700; text-align: right; }
+  .bar-track { display: flex; gap: 2px; height: 22px; }
+  .bar-seg { border-radius: 3px; min-width: 2px; transition: opacity 0.15s; }
+  .bar-seg:hover { opacity: 0.82; }
+  .bar-row .total { font-size: 0.8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .chart-legend-h { display: flex; gap: 16px; margin-top: 12px; flex-wrap: wrap; }
+  .chart-legend-h .legend-item { font-size: 0.78rem; }
+
+  table.xtab { border-collapse: collapse; width: 100%; margin-top: 14px; font-size: 0.8rem; }
+  .xtab th, .xtab td { padding: 6px 10px; text-align: right; font-variant-numeric: tabular-nums; border-top: 1px solid var(--line); }
+  .xtab th:first-child, .xtab td:first-child { text-align: left; }
+  .xtab thead th { border-top: 0; color: var(--muted); font-size: 0.74rem; letter-spacing: 0.04em; }
+
+  .rep-category { border-top: 1px solid var(--line); margin-top: 18px; padding-top: 16px; }
+  .rep-category:first-of-type { border-top: 0; margin-top: 4px; padding-top: 0; }
+  .rep-category h3 { margin: 0 0 10px; font-size: 0.92rem; font-weight: 800; }
+  .rep-category h3 .tally { font-weight: 600; font-size: 0.76rem; color: var(--muted); margin-left: 8px; }
+  .rep-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .rep-col-title { font-size: 0.78rem; font-weight: 800; margin-bottom: 8px; }
+  .rep-col-title.pos { color: var(--pos); }
+  .rep-col-title.neg { color: var(--neg); }
+  .rep-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+  .rep-list li {
+    background: var(--chip); border-radius: 10px; padding: 8px 11px;
+    font-size: 0.82rem; line-height: 1.5; word-break: break-word;
+  }
+  .rep-icon { font-weight: 900; margin-right: 7px; }
+  .rep-icon.pos { color: var(--pos); }
+  .rep-icon.neg { color: var(--neg); }
+  .rep-empty { font-size: 0.8rem; color: var(--muted); }
+
+  .footnote { font-size: 0.78rem; color: var(--muted); }
+  .footnote ul { margin: 6px 0 0; padding-left: 18px; display: flex; flex-direction: column; gap: 3px; }
+
+  @media (max-width: 760px) {
+    .metric-row { grid-template-columns: repeat(2, 1fr); }
+    .duo { grid-template-columns: 1fr; }
+    .rep-columns { grid-template-columns: 1fr; }
+    .bar-row { grid-template-columns: 64px 1fr 50px; }
+  }
+
+  @media print {
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    html { background: #FFFFFF; }
+    .shell { max-width: none; padding: 0; gap: 12px; }
+    .duo { grid-template-columns: 1fr; }
+    .metric-row { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .hero, .metric, .rep-category, .rep-list li, .bar-row, .donut-wrap, table.xtab { break-inside: avoid; }
+    .panel { border-color: #C9D2E0; }
+  }
+</style>
+
+<div class="shell">
+  <header class="hero">
+    <div class="eyebrow">Live Chat Analysis</div>
+    <h1>국민연금 라이브 방송 실시간 채팅 여론 분석</h1>
+    <p>유튜브 라이브 방송 실시간 채팅 985건을 대시보드와 동일한 기준(감성 4단계 · 분류 4종)으로 분석했습니다. 채팅에는 추천수가 없어 대표 의견은 주제 대표성과 의견 다양성 기준으로 선정했습니다.</p>
+  </header>
+
+  <div class="metric-row">
+    <div class="metric"><div class="label">수집 채팅</div><div class="value">985<span class="unit">건</span></div><div class="note">문서에서 추출한 전체 채팅</div></div>
+    <div class="metric"><div class="label">분석 대상</div><div class="value">738<span class="unit">건</span></div><div class="note">타임스탬프 등 247건 제외</div></div>
+    <div class="metric"><div class="label">부정 의견</div><div class="value" style="color: var(--neg)">24.4<span class="unit">%</span></div><div class="note">180건 · 광고 제외 기준</div></div>
+    <div class="metric"><div class="label">긍정 의견</div><div class="value" style="color: var(--pos)">18.3<span class="unit">%</span></div><div class="note">135건 · 광고 제외 기준</div></div>
+  </div>
+
+  <div class="duo">
+    <section class="panel">
+      <h2>전체 감성 분포</h2>
+      <p class="sub">광고성 채팅(1건)을 제외한 737건 기준입니다.</p>
+      <div class="donut-wrap">
+        <svg id="donut" width="170" height="170" viewBox="0 0 170 170" role="img" aria-label="감성 분포 도넛 차트: 중립 57.3%, 부정 24.4%, 긍정 18.3%">
+          <text class="donut-center-label" x="85" y="78" text-anchor="middle">분석 채팅</text>
+          <text class="donut-center-value" x="85" y="99" text-anchor="middle">737건</text>
+        </svg>
+        <div class="legend">
+          <div class="legend-item"><span class="swatch" style="background: var(--neu)"></span><span class="name">중립</span><span class="count">422건 · 57.3%</span></div>
+          <div class="legend-item"><span class="swatch" style="background: var(--neg)"></span><span class="name">부정</span><span class="count">180건 · 24.4%</span></div>
+          <div class="legend-item"><span class="swatch" style="background: var(--pos)"></span><span class="name">긍정</span><span class="count">135건 · 18.3%</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>분류별 여론</h2>
+      <p class="sub">분류별 채팅 반응을 감성 기준으로 나누어 보여줍니다. 광고성 채팅 1건은 제외했습니다.</p>
+      <div class="bars" id="bars"></div>
+      <div class="chart-legend-h">
+        <div class="legend-item"><span class="swatch" style="background: var(--pos)"></span>긍정</div>
+        <div class="legend-item"><span class="swatch" style="background: var(--neg)"></span>부정</div>
+        <div class="legend-item"><span class="swatch" style="background: var(--neu)"></span>중립</div>
+      </div>
+      <table class="xtab">
+        <thead><tr><th>분류</th><th>긍정</th><th>부정</th><th>중립</th><th>합계</th></tr></thead>
+        <tbody>
+          <tr><td>기타</td><td>111</td><td>121</td><td>381</td><td>613</td></tr>
+          <tr><td>연금개혁</td><td>18</td><td>21</td><td>21</td><td>60</td></tr>
+          <tr><td>리밸런싱</td><td>1</td><td>28</td><td>9</td><td>38</td></tr>
+          <tr><td>퇴직연금</td><td>5</td><td>10</td><td>11</td><td>26</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+
+  <section class="panel">
+    <h2>분류별 대표 의견</h2>
+    <p class="sub">각 분류에서 주제를 가장 잘 대표하고 관점이 겹치지 않는 채팅을 긍정·부정 최대 5건씩 골랐습니다. 인신공격·단순 비방만 담긴 채팅은 부정 의견에서 제외했습니다. 원문 표기를 그대로 유지했습니다.</p>
+
+    <div class="rep-category">
+      <h3>리밸런싱<span class="tally">긍정 1 · 부정 28 · 중립 9</span></h3>
+      <div class="rep-columns">
+        <div>
+          <div class="rep-col-title pos">긍정 대표 의견</div>
+          <ul class="rep-list">
+            <li><span class="rep-icon pos">◯</span>수십년간 국민연금 땜에 코스피가 버틴것임.</li>
+          </ul>
+          <p class="rep-empty" style="margin: 7px 2px 0">리밸런싱 분류의 긍정 채팅은 1건뿐이었습니다.</p>
+        </div>
+        <div>
+          <div class="rep-col-title neg">부정 대표 의견</div>
+          <ul class="rep-list">
+            <li><span class="rep-icon neg">❌</span>국내주가 방어가 아니라... 외인들 팔아서 폭락해도 같이 팔아치우는 국민연금...</li>
+            <li><span class="rep-icon neg">❌</span>문제는… 연금이 팔아서 신장변동성이 생기는게 아니라, 연금이 리벨런싱 지금까지 미뤄서 이젠 연기금이 뭘 더 할수있는 게 적어진다는 게 문제아닌가?</li>
+            <li><span class="rep-icon neg">❌</span>국민연금의 본연의 목적이뭐냐? 주식 시장 폭락때 지수 방어 목적도 있는거 아냐?? 지수 폭락하는데 비중꽉차있어서 지수방어도 못하고</li>
+            <li><span class="rep-icon neg">❌</span>연기금이 국장에 들어오는순간 개미들 돈 다 빨아먹는거야</li>
+            <li><span class="rep-icon neg">❌</span>그게 국민연금이 문제야? 왜! 엄청난 돈을 위험성 자산인 주식에 넣어서.. 주가 떨어져도 그렇게 얘기하나 보자!!!</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="rep-category">
+      <h3>연금개혁<span class="tally">긍정 18 · 부정 21 · 중립 21</span></h3>
+      <div class="rep-columns">
+        <div>
+          <div class="rep-col-title pos">긍정 대표 의견</div>
+          <ul class="rep-list">
+            <li><span class="rep-icon pos">◯</span>노벨재단이 노벨이 남긴 유산으로 이렇게 일군거 보면, 국민들이 준다고 연금이 고갈되기보다, 그만큼 투자수익으로 들어오는 인컴을 늘려야할듯</li>
+            <li><span class="rep-icon pos">◯</span>계속 불려야지... 가만두면 결국 고갈로 끝인데.. 저출산이라서</li>
+            <li><span class="rep-icon pos">◯</span>국민연금 수익률제고로 연금고갈 막아내자!!!</li>
+            <li><span class="rep-icon pos">◯</span>국민연금이 망하면 국가도 글로벌 경제도 망했다는 거지</li>
+            <li><span class="rep-icon pos">◯</span>예언하나 합니다 향후 30년후 출산율은 늘어나고 인구는 균형에 도달 연금고갈 걱정에서 벗어나게 됩니다</li>
+          </ul>
+        </div>
+        <div>
+          <div class="rep-col-title neg">부정 대표 의견</div>
+          <ul class="rep-list">
+            <li><span class="rep-icon neg">❌</span>고갈되는 시점이 언젠가 도래한다면, 뒷 세대는 왜 국민연금을 내야하나?</li>
+            <li><span class="rep-icon neg">❌</span>연금 통합해라 누군 구멍 났는데 국민세금으로 많이 주는게 공정하냐? 연금 통합해라 아니면 국민연금도 세금 투입해서 더 많이 주던가.</li>
+            <li><span class="rep-icon neg">❌</span>저게 유지 된다는 보장이 어딨냐. 무한자금 처럼 들어오니 가능한거지 유입자금 적어지면 수익률 더 어려워 그걸 이야기 안하네</li>
+            <li><span class="rep-icon neg">❌</span>선택적 가입으로 바꺼야함</li>
+            <li><span class="rep-icon neg">❌</span>100살 넘게 살아야지 돈 받게ㅋ</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="rep-category">
+      <h3>퇴직연금<span class="tally">긍정 5 · 부정 10 · 중립 11</span></h3>
+      <div class="rep-columns">
+        <div>
+          <div class="rep-col-title pos">긍정 대표 의견</div>
+          <ul class="rep-list">
+            <li><span class="rep-icon pos">◯</span>맞네 회사가 망해도 퇴직연금은 지켜야지</li>
+            <li><span class="rep-icon pos">◯</span>강제화해야함</li>
+            <li><span class="rep-icon pos">◯</span>학원강사들 퇴직금 못받고 개인민간에 맡기면 안됨</li>
+            <li><span class="rep-icon pos">◯</span>퇴직연금을 주식시장에 얼른 풀어야해</li>
+            <li><span class="rep-icon pos">◯</span>퇴직금 괘 될텐데... 공무원연금 처럼 운영해 줘야지</li>
+          </ul>
+        </div>
+        <div>
+          <div class="rep-col-title neg">부정 대표 의견</div>
+          <ul class="rep-list">
+            <li><span class="rep-icon neg">❌</span>헌법에 위배 ㅡㅡ 퇴직금 강제 DC 전환</li>
+            <li><span class="rep-icon neg">❌</span>금융회사들 로비 엄청 났음</li>
+            <li><span class="rep-icon neg">❌</span>이제와서 강제 ㅋㅋㅋㅋ</li>
+            <li><span class="rep-icon neg">❌</span>20년넘게 일 해오고 있는데 퇴직금 개인이 마련해야함</li>
+            <li><span class="rep-icon neg">❌</span>한쪽은 전세금 날려, 한쪽은 퇴직금 날려. 잘하고 있다</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="rep-category">
+      <h3>기타<span class="tally">긍정 111 · 부정 121 · 중립 381</span></h3>
+      <div class="rep-columns">
+        <div>
+          <div class="rep-col-title pos">긍정 대표 의견</div>
+          <ul class="rep-list">
+            <li><span class="rep-icon pos">◯</span>이렇게 나와서 설명을 해주니 그래도 좀 좋네요</li>
+            <li><span class="rep-icon pos">◯</span>우리 아버지가 국민연금 3100만원 내고 20년 넘게 1억8천7백만원 받고있지</li>
+            <li><span class="rep-icon pos">◯</span>정말로 최고의 자산운용자이신 분들 10억 이상줘도 안아깝다</li>
+            <li><span class="rep-icon pos">◯</span>꾸준히 수익내주는게 어디냐</li>
+            <li><span class="rep-icon pos">◯</span>국민연금만한 연금이 없음 물가 인상율도 적용해주고... 난 10년 전부터 임의 가입으로 더 넣는중</li>
+          </ul>
+        </div>
+        <div>
+          <div class="rep-col-title neg">부정 대표 의견</div>
+          <ul class="rep-list">
+            <li><span class="rep-icon neg">❌</span>그래 열심히 파악해서 회의록 오픈 하던것을 오픈 하지 않고 있으니.. 뭔 말을 해도 알수 없게 만든것..</li>
+            <li><span class="rep-icon neg">❌</span>바클레이드 보고서 환율 박살낸게 현정부 국민연금</li>
+            <li><span class="rep-icon neg">❌</span>와 증시 변동성을 개미들 탓으로 다 돌려버리냐?</li>
+            <li><span class="rep-icon neg">❌</span>국민연금 임명직 하니 눈치 너무 봄 교육장처럼 투표로 뽑아야 함</li>
+            <li><span class="rep-icon neg">❌</span>레버리지 막았어야지 예상못했어?</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel footnote">
+    <strong>분석 기준</strong>
+    <ul>
+      <li>감성은 국민연금공단·국민연금 제도·기금 운용에 대한 태도를 기준으로 긍정 / 부정 / 중립 / 광고로 분류했습니다. 방송 패널이나 방송 자체에 대한 잡담은 중립으로 처리했습니다.</li>
+      <li>분류는 대시보드와 동일한 4종 — 리밸런싱(국내 주식 투자 비중·리밸런싱), 연금개혁(연금개혁·구조개혁·추가 모수개혁), 퇴직연금(퇴직연금·의무화·기금화·국민연금 참여), 기타 — 를 사용했습니다.</li>
+      <li>수집 985건 중 영상 타임스탬프 등 채팅이 아닌 247건을 제외한 738건을 분석했으며, 단순 웃음·이모지 반응은 중립·기타에 포함했습니다.</li>
+      <li>라이브 채팅에는 추천수 정보가 없어, 대표 의견은 추천수 대신 주제 대표성과 의견 다양성을 기준으로 선정했습니다.</li>
+    </ul>
+  </section>
+</div>
+
+<script>
+  (function () {
+    // 도넛 차트: 중립 422 / 부정 180 / 긍정 135 (합 737)
+    const svg = document.getElementById('donut');
+    const NS = 'http://www.w3.org/2000/svg';
+    const cx = 85, cy = 85, r = 62, width = 24;
+    const data = [
+      { name: '중립', value: 422, color: 'var(--neu)' },
+      { name: '부정', value: 180, color: 'var(--neg)' },
+      { name: '긍정', value: 135, color: 'var(--pos)' },
+    ];
+    const total = data.reduce((acc, d) => acc + d.value, 0);
+    const gap = 0.035; // 라디안 단위 세그먼트 간격
+    let angle = -Math.PI / 2;
+    for (const d of data) {
+      const sweep = (d.value / total) * Math.PI * 2;
+      const a0 = angle + gap / 2;
+      const a1 = angle + sweep - gap / 2;
+      const large = (a1 - a0) > Math.PI ? 1 : 0;
+      const p = document.createElementNS(NS, 'path');
+      const x0 = cx + r * Math.cos(a0), y0 = cy + r * Math.sin(a0);
+      const x1 = cx + r * Math.cos(a1), y1 = cy + r * Math.sin(a1);
+      p.setAttribute('d', `M ${x0} ${y0} A ${r} ${r} 0 ${large} 1 ${x1} ${y1}`);
+      p.setAttribute('fill', 'none');
+      p.setAttribute('stroke', d.color);
+      p.setAttribute('stroke-width', width);
+      p.setAttribute('stroke-linecap', 'butt');
+      const t = document.createElementNS(NS, 'title');
+      t.textContent = `${d.name} ${d.value}건 (${(d.value / total * 100).toFixed(1)}%)`;
+      p.appendChild(t);
+      svg.insertBefore(p, svg.firstChild);
+      angle += sweep;
+    }
+
+    // 분류별 스택 바
+    const cross = [
+      { cat: '기타', pos: 111, neg: 121, neu: 381 },
+      { cat: '연금개혁', pos: 18, neg: 21, neu: 21 },
+      { cat: '리밸런싱', pos: 1, neg: 28, neu: 9 },
+      { cat: '퇴직연금', pos: 5, neg: 10, neu: 11 },
+    ];
+    const max = Math.max(...cross.map(row => row.pos + row.neg + row.neu));
+    const barsEl = document.getElementById('bars');
+    const palette = { pos: ['긍정', 'var(--pos)'], neg: ['부정', 'var(--neg)'], neu: ['중립', 'var(--neu)'] };
+    for (const row of cross) {
+      const rowTotal = row.pos + row.neg + row.neu;
+      const rowEl = document.createElement('div');
+      rowEl.className = 'bar-row';
+      const track = ['pos', 'neg', 'neu'].map(key => {
+        if (!row[key]) return '';
+        const pct = (row[key] / max * 100).toFixed(2);
+        const [label, color] = palette[key];
+        return `<div class="bar-seg" style="width:${pct}%;background:${color}" title="${row.cat} · ${label} ${row[key]}건"></div>`;
+      }).join('');
+      rowEl.innerHTML = `<div class="cat">${row.cat}</div><div class="bar-track">${track}</div><div class="total">${rowTotal}건</div>`;
+      barsEl.appendChild(rowEl);
+    }
+  })();
+</script>
+
+</html>
