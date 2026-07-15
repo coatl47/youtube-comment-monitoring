@@ -1,6 +1,6 @@
 {
   "dashboard_title": "국민연금 이사장 유튜브 여론 모니터링",
-  "default_report_id": "sampro_ceo_ep1_20260423",
+  "default_report_id": "youtube__OQNFmmR9kQ",
   "default_prompt_file": "prompt/prompt_base.txt",
   "reports": [
     {
@@ -46,6 +46,17 @@
       "prompt_file": "prompt/prompt_base.txt",
       "enabled": false,
       "collect_enabled": false
+    },
+    {
+      "id": "youtube__OQNFmmR9kQ",
+      "tab_label": "국민연금 '리밸런싱' 이대로 괜찮나? 이사장 본인 등판",
+      "video_title": "국민연금 '리밸런싱' 이대로 괜찮나? 이사장 본인 등판",
+      "video_url": "https://www.youtube.com/watch?v=_OQNFmmR9kQ",
+      "start_date": "20260715_180334",
+      "video_start_at": "2026-07-15 18:00:06",
+      "prompt_file": "prompt/prompt_base.txt",
+      "enabled": true,
+      "collect_enabled": true
     }
   ]
 }
