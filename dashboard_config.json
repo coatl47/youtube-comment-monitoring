@@ -1,6 +1,6 @@
 {
   "dashboard_title": "국민연금 이사장 유튜브 여론 모니터링",
-  "default_report_id": "youtube__OQNFmmR9kQ",
+  "default_report_id": "youtube_sACZE_SoXZ0",
   "default_prompt_file": "prompt/prompt_base.txt",
   "reports": [
     {
@@ -33,8 +33,8 @@
       "start_date": "20260423",
       "video_start_at": "2026-04-23 19:00:00",
       "prompt_file": "prompt/prompt_20260423.txt",
-      "enabled": true,
-      "collect_enabled": true
+      "enabled": false,
+      "collect_enabled": false
     },
     {
       "id": "youtube_K7KSTS8RwVc",
@@ -54,6 +54,17 @@
       "video_url": "https://www.youtube.com/watch?v=_OQNFmmR9kQ",
       "start_date": "20260715_180334",
       "video_start_at": "2026-07-15 18:00:06",
+      "prompt_file": "prompt/prompt_base.txt",
+      "enabled": false,
+      "collect_enabled": false
+    },
+    {
+      "id": "youtube_sACZE_SoXZ0",
+      "tab_label": "[뉴스하이킥] 김성주 이사장 \"국내 주식시장서 국민연금 비",
+      "video_title": "[뉴스하이킥] 김성주 이사장 \"국내 주식시장서 국민연금 비중 6~7% 불과… 증시 폭락 책임론 사실무근\" - 김성주, MBC 260730 방송",
+      "video_url": "https://www.youtube.com/watch?v=sACZE_SoXZ0",
+      "start_date": "20260730_214202",
+      "video_start_at": "2026-07-30 20:59:00",
       "prompt_file": "prompt/prompt_base.txt",
       "enabled": true,
       "collect_enabled": true
