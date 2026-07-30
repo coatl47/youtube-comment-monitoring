@@ -3,6 +3,15 @@ name: Analyze Requested YouTube Video
 on:
   issues:
     types: [opened]
+  workflow_dispatch:
+    inputs:
+      youtube_url:
+        description: '분석할 유튜브 영상 주소'
+        required: true
+      exclusive:
+        description: '이 영상만 대시보드에 표시(다른 리포트 비활성화)'
+        type: boolean
+        default: true
 
 permissions:
   contents: write
@@ -15,8 +24,9 @@ concurrency:
 jobs:
   analyze-request:
     if: >-
-      startsWith(github.event.issue.title, '[YouTube 분석 요청]') &&
-      contains('OWNER,MEMBER,COLLABORATOR', github.event.issue.author_association)
+      github.event_name == 'workflow_dispatch' ||
+      (startsWith(github.event.issue.title, '[YouTube 분석 요청]') &&
+      contains('OWNER,MEMBER,COLLABORATOR', github.event.issue.author_association))
     runs-on: ubuntu-latest
     steps:
       - name: 저장소 체크아웃
@@ -35,13 +45,34 @@ jobs:
       - name: 요청 검증 및 분석 대상 등록
         id: request
         env:
-          REQUEST_BODY: ${{ github.event.issue.body }}
+          REQUEST_BODY: ${{ github.event_name == 'workflow_dispatch' && inputs.youtube_url || github.event.issue.body }}
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           YOUTUBE_API_TIMEOUT: 30
         run: |
           python request_analysis.py "$REQUEST_BODY" > request_result.json
           REPORT_ID="$(python -c "import json; print(json.load(open('request_result.json'))['report_id'])")"
           echo "report_id=$REPORT_ID" >> "$GITHUB_OUTPUT"
+
+      - name: 이 영상만 표시하도록 정리
+        if: github.event_name == 'workflow_dispatch' && inputs.exclusive
+        env:
+          REPORT_ID: ${{ steps.request.outputs.report_id }}
+        run: |
+          python - <<'PY'
+          import json, os
+          target = os.environ["REPORT_ID"]
+          with open("dashboard_config.json", encoding="utf-8") as f:
+              config = json.load(f)
+          for report in config["reports"]:
+              active = report["id"] == target
+              report["enabled"] = active
+              report["collect_enabled"] = active
+          config["default_report_id"] = target
+          with open("dashboard_config.json", "w", encoding="utf-8") as f:
+              json.dump(config, f, ensure_ascii=False, indent=2)
+              f.write("\n")
+          print("활성 리포트:", target)
+          PY
 
       - name: 댓글 수집 및 AI 분석
         env:
@@ -67,6 +98,7 @@ jobs:
           git push origin main
 
       - name: 완료 안내
+        if: github.event_name == 'issues'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -74,7 +106,7 @@ jobs:
           gh issue close "${{ github.event.issue.number }}"
 
       - name: 실패 안내
-        if: failure()
+        if: failure() && github.event_name == 'issues'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
