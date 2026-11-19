@@ -1560,9 +1560,17 @@
                 if (container) container.innerHTML = '<div class="empty-msg">댓글 작성 시각 데이터가 아직 없습니다.</div>';
                 return;
             }
-            const start = bundle.report.video_start_at;
+            // 게재 전(예약 공개 등)에 달린 댓글이 있으면 그 시각부터 그립니다.
+            const firstAt = rows[0].published_at;
+            const start = bundle.report.video_start_at && bundle.report.video_start_at < firstAt ? bundle.report.video_start_at : firstAt;
             const x = [start, ...rows.map(row => row.published_at)];
             const y = [0, ...rows.map((row, index) => index + 1)];
+            // 마지막 댓글 이후 오늘(최근 수집 시각)까지 선을 이어 줍니다.
+            const lastCollected = bundle.latest?.timestamp;
+            if (lastCollected && lastCollected > x[x.length - 1]) {
+                x.push(lastCollected);
+                y.push(rows.length);
+            }
             if (container) container.innerHTML = '';
             Plotly.newPlot('detailViewChart', [{
                 x,
