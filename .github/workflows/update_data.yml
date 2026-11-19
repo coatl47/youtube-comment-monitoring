@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths-ignore:           # 문서(.md)만 바뀐 push에서는 수집을 실행하지 않음
+      - '**.md'
   schedule:
     - cron: '3,18,33,48 * * * *'  # 15분 주기, 혼잡한 정각·5분 단위 슬롯을 피해 오프셋 실행
   workflow_dispatch:        # GitHub에서 수동 버튼 클릭으로도 실행 가능
