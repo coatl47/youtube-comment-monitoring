@@ -10,9 +10,10 @@
       "video_url": "https://youtu.be/fNHLffyXnQM?si=RpMYiECR4H0xm9Es",
       "start_date": "20260214",
       "video_start_at": "2026-02-14 08:00:00",
-      "prompt_file": "prompt/prompt_base.txt",
+      "prompt_file": "prompt/prompt_20260214.txt",
       "enabled": true,
-      "collect_enabled": false
+      "collect_enabled": false,
+      "overview_comments_file": "overview_comments/overview_comments_20260214.csv"
     },
     {
       "id": "future_scenario_shorts_20260220",
@@ -32,9 +33,10 @@
       "video_url": "https://youtu.be/EBLo0C-sj2w?si=3OzV4KhNnKvKrspb",
       "start_date": "20260423",
       "video_start_at": "2026-04-23 19:00:00",
-      "prompt_file": "prompt/prompt_base.txt",
+      "prompt_file": "prompt/prompt_20260423.txt",
       "enabled": true,
-      "collect_enabled": false
+      "collect_enabled": false,
+      "overview_comments_file": "overview_comments/overview_comments_20260423.csv"
     },
     {
       "id": "youtube_K7KSTS8RwVc",

@@ -1025,9 +1025,11 @@
             return { rows: data, sentimentCounts, categoryCounts };
         }
 
-        function buildBundle(report, statsRows, commentRows) {
+        function buildBundle(report, statsRows, commentRows, overviewRows) {
             const stats = buildStatsSeries(statsRows, report);
             const commentData = buildCommentData(commentRows);
+            // 종합 탭 비교용: 공통 4분류로 재분석한 파일이 있으면 그 분류를, 없으면 원본 분류를 씁니다.
+            const overviewCategoryCounts = overviewRows ? buildCommentData(overviewRows).categoryCounts : commentData.categoryCounts;
             const latest = stats[stats.length - 1] || null;
             const totalComments = commentData.rows.length;
             const dominantSentiment = sentimentOrder.reduce((best, key) => {
@@ -1047,6 +1049,7 @@
                 comments: commentData.rows,
                 sentimentCounts: commentData.sentimentCounts,
                 categoryCounts: commentData.categoryCounts,
+                overviewCategoryCounts,
                 totalComments,
                 dominantSentiment,
                 topCategory
@@ -1061,11 +1064,12 @@
 
                 const loadedBundles = await Promise.all(
                     reports.map(async report => {
-                        const [statsRows, commentRows] = await Promise.all([
+                        const [statsRows, commentRows, overviewRows] = await Promise.all([
                             parseCsv(`video_stats/video_stats_${report.start_date}.csv`),
-                            parseCsv(`analyzed_comments/analyzed_comments_${report.start_date}.csv`)
+                            parseCsv(`analyzed_comments/analyzed_comments_${report.start_date}.csv`),
+                            report.overview_comments_file ? parseCsv(report.overview_comments_file).catch(() => null) : null
                         ]);
-                        return buildBundle(report, statsRows, commentRows);
+                        return buildBundle(report, statsRows, commentRows, overviewRows);
                     })
                 );
 
@@ -1210,7 +1214,7 @@
         function renderTopIssue(bundle) {
             const issues = categoryOrder
                 .filter(category => category !== '기관 운영 등 기타')
-                .map(category => [category, Object.values(bundle.categoryCounts[category] || {}).reduce((sum, value) => sum + value, 0)])
+                .map(category => [category, Object.values(bundle.overviewCategoryCounts[category] || {}).reduce((sum, value) => sum + value, 0)])
                 .filter(([, count]) => count > 0)
                 .sort((a, b) => b[1] - a[1]);
             if (!issues.length) return '<span class="cell-sub">없음</span>';
@@ -1311,7 +1315,7 @@
             const header = categories.map(category => `<th>${escapeHtml(category)}</th>`).join('');
             const body = bundles.map(bundle => {
                 const cells = categories.map(category => {
-                    const counts = bundle.categoryCounts[category] || {};
+                    const counts = bundle.overviewCategoryCounts[category] || {};
                     const total = Object.values(counts).reduce((sum, value) => sum + value, 0);
                     if (total < MIN_CELL_COUNT) {
                         return `<td class="heat-cell is-empty" title="${total}건">-</td>`;
