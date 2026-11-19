@@ -80,7 +80,8 @@
       "video_start_at": "2026-09-27 12:05:14",
       "prompt_file": "prompt/prompt_base.txt",
       "enabled": true,
-      "collect_enabled": true
+      "collect_enabled": true,
+      "comment_timeline_file": "comment_timeline/comment_timeline_20261119_164429.csv"
     }
   ]
 }

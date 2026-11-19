@@ -1,0 +1,48 @@
+name: Fetch Comment Timeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      report_id:
+        description: '댓글 작성 시각을 받아올 report id (LLM 비용 없음)'
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: youtube-dashboard-data-write
+  cancel-in-progress: false
+
+jobs:
+  timeline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 저장소 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: 파이썬 환경 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: 필요 라이브러리 설치
+        run: pip install -r requirements.txt
+
+      - name: 댓글 작성 시각 수집
+        env:
+          REPORT_ID: ${{ inputs.report_id }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          YOUTUBE_API_TIMEOUT: 30
+        run: python fetch_comment_timeline.py --report-id "$REPORT_ID"
+
+      - name: 결과 저장
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add comment_timeline/
+          git diff --staged --quiet || git commit -m "Fetch comment timeline"
+          git pull --rebase origin main
+          git push origin main

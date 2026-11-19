@@ -1428,7 +1428,10 @@
 
                 <div class="card-panel">
                     <div class="panel-header">
-                        <h3 class="panel-title">시간대별 누적 조회수 추이</h3>
+                        ${report.comment_timeline_file ? `
+                        <h3 class="panel-title">시간대별 누적 댓글 수 추이</h3>
+                        <p class="panel-subtitle">게재 후 뒤늦게 등록한 영상이라 과거 조회수 기록이 없어, 댓글 작성 시각(최상위 댓글, 광고 포함) 기준으로 게재부터 지금까지의 반응 흐름을 보여줍니다.</p>
+                        ` : '<h3 class="panel-title">시간대별 누적 조회수 추이</h3>'}
                     </div>
                     <div class="panel-body">
                         <div id="detailViewChart" class="chart-container"><div class="empty-msg">차트 로딩 중...</div></div>
@@ -1543,12 +1546,48 @@
             }
         }
 
+        // 조회수 기록이 없는 영상: 댓글 작성 시각으로 누적 댓글 수 추이를 그립니다.
+        async function renderCommentTimelineChart(bundle) {
+            let rows = [];
+            try {
+                rows = (await parseCsv(bundle.report.comment_timeline_file)).filter(row => row.published_at);
+            } catch (error) {
+                console.error(error);
+            }
+            if (appState.activeTab !== bundle.report.id) return;
+            const container = document.getElementById('detailViewChart');
+            if (!rows.length) {
+                if (container) container.innerHTML = '<div class="empty-msg">댓글 작성 시각 데이터가 아직 없습니다.</div>';
+                return;
+            }
+            const start = bundle.report.video_start_at;
+            const x = [start, ...rows.map(row => row.published_at)];
+            const y = [0, ...rows.map((row, index) => index + 1)];
+            if (container) container.innerHTML = '';
+            Plotly.newPlot('detailViewChart', [{
+                x,
+                y,
+                type: 'scatter',
+                mode: 'lines',
+                line: { color: '#185ABD', width: 3, shape: 'hv' },
+                fill: 'tozeroy',
+                fillcolor: 'rgba(24, 90, 189, 0.08)',
+                hovertemplate: '%{x}<br>누적 댓글 %{y:,}개<extra></extra>'
+            }], {
+                margin: { t: 20, b: 50, l: 58, r: 16 },
+                xaxis: { tickfont: { size: chartFontSize } },
+                yaxis: { tickfont: { size: chartFontSize }, rangemode: 'tozero' }
+            }, configOptions);
+        }
+
         function renderDetailCharts(bundle) {
             prepareChartContainer('detailViewChart');
             prepareChartContainer('detailSentimentChart');
             prepareChartContainer('detailCategoryChart');
 
-            Plotly.newPlot('detailViewChart', [{
+            if (bundle.report.comment_timeline_file) {
+                renderCommentTimelineChart(bundle);
+            } else Plotly.newPlot('detailViewChart', [{
                 x: bundle.stats.map(row => row.timestamp),
                 y: bundle.stats.map(row => row.view_count),
                 type: 'scatter',
