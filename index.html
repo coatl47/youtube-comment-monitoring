@@ -862,7 +862,7 @@
         const isMobile = window.innerWidth < 768;
         const chartFontSize = isMobile ? 11 : 12;
         const appState = { config: null, reports: [], bundles: new Map(), activeTab: 'overview', tabOffset: 0 };
-        const VISIBLE_VIDEO_TABS = isMobile ? 2 : 4; // 종합 탭(고정) + 영상 탭 4개 = 최대 5개
+        const VISIBLE_VIDEO_TABS = isMobile ? 2 : 5; // 종합 탭(고정) + 영상 탭 5개 = 최대 6개
 
         function formatNumber(value) {
             const number = Number(value || 0);
