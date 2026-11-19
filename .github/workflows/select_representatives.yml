@@ -1,0 +1,51 @@
+name: Generate Representative Comments
+
+on:
+  workflow_dispatch:
+    inputs:
+      report_id:
+        description: '대표 댓글을 만들 report id (예: the_people_20260214)'
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: youtube-dashboard-data-write
+  cancel-in-progress: false
+
+jobs:
+  select:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 저장소 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: 파이썬 환경 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: 필요 라이브러리 설치
+        run: pip install -r requirements.txt
+
+      - name: 대표 댓글 선별 (댓글 재분석 없음, LLM 소량 호출)
+        env:
+          PYTHONUNBUFFERED: "1"
+          REPORT_ID: ${{ inputs.report_id }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          OPENROUTER_MODEL: openai/gpt-4o-mini
+          OPENROUTER_TIMEOUT: 60
+          TZ: Asia/Seoul
+        run: python select_representative_comments.py --report-id "$REPORT_ID"
+
+      - name: 결과 저장
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add representative_comments/
+          git diff --staged --quiet || git commit -m "Generate representative comments"
+          git pull --rebase origin main
+          git push origin main
