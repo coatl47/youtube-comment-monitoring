@@ -10,7 +10,7 @@
       "video_url": "https://youtu.be/fNHLffyXnQM?si=RpMYiECR4H0xm9Es",
       "start_date": "20260214",
       "video_start_at": "2026-02-14 08:00:00",
-      "prompt_file": "prompt/prompt_20260214.txt",
+      "prompt_file": "prompt/prompt_base.txt",
       "enabled": true,
       "collect_enabled": false
     },
