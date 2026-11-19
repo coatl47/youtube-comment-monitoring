@@ -1579,9 +1579,9 @@
                 fillcolor: 'rgba(24, 90, 189, 0.08)',
                 hovertemplate: '%{x}<br>누적 댓글 %{y:,}개<extra></extra>'
             }], {
-                margin: { t: 20, b: 50, l: 58, r: 16 },
+                margin: { t: 20, b: 50, l: 70, r: 16 },
                 xaxis: { tickfont: { size: chartFontSize } },
-                yaxis: { tickfont: { size: chartFontSize }, rangemode: 'tozero' }
+                yaxis: { tickfont: { size: chartFontSize }, rangemode: 'tozero', title: { text: '누적 댓글 수', font: { size: chartFontSize } } }
             }, configOptions);
         }
 
