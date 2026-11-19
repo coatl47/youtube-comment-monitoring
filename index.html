@@ -64,15 +64,15 @@
             font-size: 1rem;
         }
 
-        .nav-wrap {
-            margin: 22px 0 24px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
         .rep-comments {
             margin-top: 18px;
+        }
+
+        /* 차트 밖에서 쓰는 안내 문구는 제자리에 표시 */
+        .rep-comments .empty-msg,
+        .panel-body > .empty-msg {
+            position: static;
+            padding: 12px 0;
         }
 
         .rep-category {
@@ -155,14 +155,64 @@
             }
         }
 
+        .nav-wrap {
+            margin: 22px 0 24px;
+            display: flex;
+            align-items: stretch;
+            gap: 10px;
+        }
+
+        .tab-scroller {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .tab-track {
+            display: flex;
+            gap: 8px;
+            flex: 0 1 auto;
+            min-width: 0;
+        }
+
         .dashboard-tab {
             border: 1px solid var(--line);
             background: rgba(255, 255, 255, 0.86);
-            border-radius: 999px;
-            padding: 10px 18px;
+            border-radius: 16px;
+            padding: 8px 16px;
             color: var(--text);
             font-weight: 700;
             transition: all 0.2s ease;
+            text-align: left;
+        }
+
+        .dashboard-tab.overview-tab {
+            flex: 0 0 auto;
+            padding: 8px 22px;
+            text-align: center;
+        }
+
+        .dashboard-tab.video-tab {
+            flex: 0 1 210px;
+            width: 210px;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.25;
+        }
+
+        .tab-name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .tab-date {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--muted);
         }
 
         .dashboard-tab:hover {
@@ -175,6 +225,160 @@
             color: white;
             border-color: var(--primary);
             box-shadow: 0 12px 24px rgba(24, 90, 189, 0.22);
+        }
+
+        .dashboard-tab.active .tab-date {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .tab-arrow {
+            flex: 0 0 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--line);
+            background: white;
+            color: var(--primary);
+            font-size: 1.35rem;
+            font-weight: 800;
+            line-height: 1;
+            padding: 0 0 3px;
+        }
+
+        .tab-arrow:hover:not(:disabled) {
+            border-color: #bfd2f2;
+            background: var(--primary-soft);
+        }
+
+        .tab-arrow:disabled {
+            opacity: 0.35;
+            cursor: default;
+        }
+
+        .compare-panel {
+            padding-bottom: 10px;
+        }
+
+        .compare-table th,
+        .compare-table td {
+            white-space: nowrap;
+        }
+
+        .compare-table th {
+            font-size: 0.8rem;
+        }
+
+        .compare-table .num {
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .compare-table tbody tr {
+            cursor: pointer;
+        }
+
+        .compare-table tbody tr:hover {
+            background: #f8fbff;
+        }
+
+        .compare-table td:first-child,
+        .compare-table th:first-child {
+            padding-left: 1.25rem;
+            white-space: nowrap;
+            position: sticky;
+            left: 0;
+            background: var(--surface);
+            z-index: 1;
+        }
+
+        .compare-table tbody tr:hover td:first-child {
+            background: #f8fbff;
+        }
+
+        .cell-sub {
+            font-size: 0.78rem;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .small-sample {
+            font-size: 0.7rem;
+            color: #b45309;
+            font-weight: 700;
+        }
+
+        .sentiment-cell {
+            min-width: 170px;
+        }
+
+        .mini-bar {
+            display: flex;
+            height: 10px;
+            border-radius: 999px;
+            overflow: hidden;
+            background: var(--surface-soft);
+        }
+
+        .mini-bar.is-faint {
+            opacity: 0.4;
+        }
+
+        .mini-bar-legend {
+            font-size: 0.75rem;
+            margin-top: 4px;
+            white-space: nowrap;
+        }
+
+        .text-positive {
+            color: var(--positive);
+            font-weight: 700;
+        }
+
+        .text-negative {
+            color: var(--negative);
+            font-weight: 700;
+        }
+
+        .heat-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 4px;
+            font-size: 0.82rem;
+        }
+
+        .heat-table thead th {
+            font-weight: 700;
+            color: var(--muted);
+            text-align: center;
+            font-size: 0.75rem;
+            padding-bottom: 4px;
+        }
+
+        .heat-row-label {
+            white-space: nowrap;
+            padding-right: 8px;
+            font-weight: 700;
+        }
+
+        .heat-cell {
+            text-align: center;
+            border-radius: 10px;
+            padding: 8px 4px;
+            min-width: 64px;
+        }
+
+        .heat-cell.is-empty {
+            background: var(--surface-soft);
+            color: var(--muted);
+        }
+
+        .heat-value {
+            font-weight: 800;
+            font-size: 0.95rem;
+        }
+
+        .heat-count {
+            font-size: 0.7rem;
+            opacity: 0.8;
         }
 
         .card-panel {
@@ -229,200 +433,6 @@
             color: var(--muted);
             font-size: 0.85rem;
             margin-top: 8px;
-        }
-
-        .overview-toolbar {
-            display: flex;
-            justify-content: space-between;
-            gap: 16px;
-            flex-wrap: wrap;
-            align-items: flex-start;
-            margin-bottom: 18px;
-        }
-
-        .overview-toolbar-copy {
-            max-width: 560px;
-        }
-
-        .overview-toolbar-copy .eyebrow {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--primary);
-            font-size: 0.8rem;
-            font-weight: 800;
-            letter-spacing: 0.02em;
-            text-transform: uppercase;
-        }
-
-        .overview-toolbar-title {
-            margin: 8px 0 6px;
-            font-size: 1.25rem;
-            font-weight: 800;
-        }
-
-        .overview-toolbar-text {
-            margin: 0;
-            color: var(--muted);
-            line-height: 1.6;
-            font-size: 0.95rem;
-        }
-
-        .compare-selector {
-            min-width: 290px;
-            flex: 1 1 320px;
-            background: linear-gradient(180deg, #fbfdff, #f6f9fe);
-            border: 1px solid var(--line);
-            border-radius: 20px;
-            padding: 16px;
-        }
-
-        .compare-selector-title {
-            margin: 0 0 4px;
-            font-size: 0.98rem;
-            font-weight: 800;
-        }
-
-        .compare-selector-copy {
-            margin: 0 0 12px;
-            color: var(--muted);
-            font-size: 0.88rem;
-            line-height: 1.55;
-        }
-
-        .compare-chip-wrap {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .compare-chip {
-            border: 1px solid var(--line);
-            background: white;
-            color: var(--text);
-            border-radius: 999px;
-            padding: 8px 12px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            transition: all 0.2s ease;
-        }
-
-        .compare-chip:hover {
-            border-color: #bfd2f2;
-            background: #f8fbff;
-        }
-
-        .compare-chip.active {
-            background: var(--primary);
-            border-color: var(--primary);
-            color: white;
-            box-shadow: 0 10px 20px rgba(24, 90, 189, 0.18);
-        }
-
-        .compare-selector-note {
-            margin-top: 12px;
-            color: var(--muted);
-            font-size: 0.82rem;
-        }
-
-        .overview-list-card {
-            background: linear-gradient(180deg, #ffffff, #f8fbff);
-            border: 1px solid var(--line);
-            border-radius: 20px;
-            padding: 16px;
-            margin-bottom: 12px;
-        }
-
-        .overview-list-card:last-child {
-            margin-bottom: 0;
-        }
-
-        .overview-list-header {
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .overview-list-title {
-            font-size: 1rem;
-            font-weight: 800;
-            margin: 0;
-        }
-
-        .overview-list-meta {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 10px 14px;
-        }
-
-        .overview-list-meta .meta-label {
-            color: var(--muted);
-            font-size: 0.77rem;
-            margin-bottom: 4px;
-        }
-
-        .overview-list-meta .meta-value {
-            font-size: 0.92rem;
-            font-weight: 700;
-            color: var(--text);
-        }
-
-        .executive-note {
-            background: linear-gradient(180deg, #ffffff, #f8fbff);
-            border: 1px solid var(--line);
-            border-radius: 20px;
-            padding: 18px;
-            height: 100%;
-        }
-
-        .executive-note-title {
-            margin: 0 0 6px;
-            font-size: 1rem;
-            font-weight: 800;
-        }
-
-        .executive-note-copy {
-            margin: 0 0 14px;
-            color: var(--muted);
-            font-size: 0.88rem;
-            line-height: 1.55;
-        }
-
-        .executive-note-list {
-            display: grid;
-            gap: 10px;
-        }
-
-        .executive-note-item {
-            padding-top: 10px;
-            border-top: 1px solid rgba(221, 228, 238, 0.8);
-        }
-
-        .executive-note-item:first-child {
-            padding-top: 0;
-            border-top: 0;
-        }
-
-        .executive-note-label {
-            color: var(--muted);
-            font-size: 0.76rem;
-            margin-bottom: 4px;
-        }
-
-        .executive-note-value {
-            font-size: 0.94rem;
-            font-weight: 700;
-            line-height: 1.45;
-        }
-
-        .overview-list-table tbody tr {
-            cursor: pointer;
-        }
-
-        .overview-list-table tbody tr:hover {
-            background: #f8fbff;
         }
 
         .summary-grid {
@@ -638,22 +648,40 @@
 
             .nav-wrap {
                 margin: 16px 0 18px;
-                gap: 8px;
-                flex-wrap: nowrap;
-                overflow-x: auto;
-                padding-bottom: 4px;
-                scrollbar-width: none;
+                gap: 6px;
             }
 
-            .nav-wrap::-webkit-scrollbar {
-                display: none;
+            .tab-scroller,
+            .tab-track {
+                gap: 6px;
             }
 
-            .dashboard-tab {
-                flex: 0 0 auto;
-                padding: 9px 14px;
-                font-size: 0.92rem;
-                white-space: nowrap;
+            .dashboard-tab.overview-tab {
+                padding: 8px 14px;
+            }
+
+            .dashboard-tab.video-tab {
+                padding: 7px 10px;
+                font-size: 0.88rem;
+            }
+
+            .tab-arrow {
+                flex-basis: 30px;
+                height: 30px;
+            }
+
+            .heat-table {
+                border-spacing: 3px;
+                font-size: 0.75rem;
+            }
+
+            .heat-cell {
+                min-width: 52px;
+                padding: 6px 2px;
+            }
+
+            .heat-value {
+                font-size: 0.85rem;
             }
 
             .card-panel {
@@ -695,44 +723,6 @@
 
             .metric-footnote {
                 font-size: 0.78rem;
-            }
-
-            .overview-toolbar {
-                margin-bottom: 14px;
-            }
-
-            .overview-toolbar-title {
-                font-size: 1.05rem;
-            }
-
-            .overview-toolbar-text,
-            .compare-selector-copy {
-                font-size: 0.86rem;
-            }
-
-            .compare-selector {
-                min-width: 100%;
-                border-radius: 16px;
-                padding: 14px;
-            }
-
-            .compare-chip {
-                font-size: 0.8rem;
-                padding: 7px 10px;
-            }
-
-            .overview-list-card {
-                border-radius: 16px;
-                padding: 14px;
-            }
-
-            .overview-list-meta {
-                gap: 10px;
-            }
-
-            .executive-note {
-                border-radius: 16px;
-                padding: 14px;
             }
 
             .summary-grid {
@@ -827,8 +817,7 @@
             </div>
         </header>
 
-        <!-- 기존 종합/채널 탭은 추후 다시 사용할 수 있도록 마크업과 렌더링 코드를 유지합니다. -->
-        <nav class="nav-wrap d-none" id="tabsContainer" aria-hidden="true"></nav>
+        <nav class="nav-wrap" id="tabsContainer" aria-label="영상 탭"></nav>
 
         <section id="overviewSection"></section>
         <section id="detailSection" class="d-none"></section>
@@ -872,7 +861,8 @@
         };
         const isMobile = window.innerWidth < 768;
         const chartFontSize = isMobile ? 11 : 12;
-        const appState = { config: null, reports: [], bundles: new Map(), activeTab: 'overview', overviewCompareIds: [] };
+        const appState = { config: null, reports: [], bundles: new Map(), activeTab: 'overview', tabOffset: 0 };
+        const VISIBLE_VIDEO_TABS = isMobile ? 2 : 4; // 종합 탭(고정) + 영상 탭 4개 = 최대 5개
 
         function formatNumber(value) {
             const number = Number(value || 0);
@@ -889,12 +879,14 @@
             return text.length >= 10 ? text.slice(0, 10) : text;
         }
 
-        function getSortedBundles() {
-            return Array.from(appState.bundles.values()).sort((bundleA, bundleB) => {
-                const valueA = bundleA.report.video_start_at || bundleA.report.start_date || '';
-                const valueB = bundleB.report.video_start_at || bundleB.report.start_date || '';
-                return valueB.localeCompare(valueA);
-            });
+        function formatShortDate(value) {
+            const text = formatDateOnly(value);
+            return /^\d{4}-\d{2}-\d{2}$/.test(text) ? text.slice(2).replace(/-/g, '.') : text;
+        }
+
+        // 등록 순서(dashboard_config.json의 reports 순서)대로 반환합니다.
+        function getOrderedBundles() {
+            return appState.reports.map(report => appState.bundles.get(report.id)).filter(Boolean);
         }
 
         function getSentimentClass(sentiment) {
@@ -929,73 +921,18 @@
             return index === 0 ? prefix : `${prefix}${index + 1}`;
         }
 
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        // 화면에 넣는 텍스트는 항상 이스케이프합니다(댓글에 HTML이 섞여 있어도 안전하게 표시).
         function safeText(value) {
-            return value ? String(value) : '-';
-        }
-
-        function initializeOverviewCompareIds() {
-            const sorted = getSortedBundles();
-            appState.overviewCompareIds = sorted.slice(0, Math.min(3, sorted.length)).map(bundle => bundle.report.id);
-        }
-
-        function getSelectedOverviewBundles() {
-            const selected = appState.overviewCompareIds
-                .map(id => appState.bundles.get(id))
-                .filter(Boolean);
-
-            return selected.length ? selected : getSortedBundles().slice(0, Math.min(3, appState.bundles.size));
-        }
-
-        function toggleOverviewCompareId(reportId) {
-            const next = new Set(appState.overviewCompareIds);
-            if (next.has(reportId)) {
-                if (next.size === 1) return;
-                next.delete(reportId);
-            } else {
-                if (next.size >= 4) return;
-                next.add(reportId);
-            }
-            appState.overviewCompareIds = getSortedBundles()
-                .map(bundle => bundle.report.id)
-                .filter(id => next.has(id));
-            renderOverview();
-        }
-
-        function getExecutiveInsights(selectedBundles, bundles) {
-            const latestBundle = bundles[0] || null;
-            const highestViewBundle = [...bundles].sort((a, b) => Number(b.latest?.view_count || 0) - Number(a.latest?.view_count || 0))[0] || null;
-            const highestNegativeBundle = [...selectedBundles].sort((a, b) => {
-                const totalA = a.totalComments || 1;
-                const totalB = b.totalComments || 1;
-                return ((b.sentimentCounts['부정'] || 0) / totalB) - ((a.sentimentCounts['부정'] || 0) / totalA);
-            })[0] || null;
-            const topCategoryEntry = Object.entries(
-                selectedBundles.reduce((acc, bundle) => {
-                    Object.entries(bundle.categoryCounts).forEach(([category, counts]) => {
-                        acc[category] = (acc[category] || 0) + Object.values(counts).reduce((sum, value) => sum + value, 0);
-                    });
-                    return acc;
-                }, {})
-            ).sort((a, b) => b[1] - a[1])[0] || null;
-
-            return [
-                {
-                    label: '최근 게재 영상',
-                    value: latestBundle ? `${safeText(latestBundle.report.tab_label)} · ${formatDateOnly(latestBundle.report.video_start_at)}` : '-'
-                },
-                {
-                    label: '가장 높은 조회수',
-                    value: highestViewBundle ? `${safeText(highestViewBundle.report.tab_label)} ${formatNumber(highestViewBundle.latest?.view_count)}회` : '-'
-                },
-                {
-                    label: '선택 비교 중 부정 비중이 높은 프로그램',
-                    value: highestNegativeBundle ? `${safeText(highestNegativeBundle.report.tab_label)} · ${Math.round(((highestNegativeBundle.sentimentCounts['부정'] || 0) / Math.max(1, highestNegativeBundle.totalComments)) * 100)}%` : '-'
-                },
-                {
-                    label: '선택 비교에서 가장 많이 언급된 분류',
-                    value: topCategoryEntry ? `${topCategoryEntry[0]} · ${formatNumber(topCategoryEntry[1])}건` : '-'
-                }
-            ];
+            return value ? escapeHtml(value) : '-';
         }
 
         function prepareChartContainer(containerId) {
@@ -1116,18 +1053,6 @@
             };
         }
 
-        function getLatestReportId(reports) {
-            if (!reports.length) return 'overview';
-
-            const sortedReports = [...reports].sort((reportA, reportB) => {
-                const valueA = reportA.video_start_at || reportA.start_date || '';
-                const valueB = reportB.video_start_at || reportB.start_date || '';
-                return valueB.localeCompare(valueA);
-            });
-
-            return sortedReports[0]?.id || 'overview';
-        }
-
         async function loadDashboard() {
             try {
                 const configResponse = await fetch(`dashboard_config.json?v=${Date.now()}`);
@@ -1147,15 +1072,13 @@
                 appState.config = config;
                 appState.reports = reports;
                 loadedBundles.forEach(bundle => appState.bundles.set(bundle.report.id, bundle));
-                initializeOverviewCompareIds();
 
                 document.title = config.dashboard_title || document.title;
                 document.getElementById('dashboardTitle').innerText = config.dashboard_title || document.title;
 
-                renderTabs();
-                renderOverview();
-
-                activateTab(getLatestReportId(reports));
+                // 처음에는 종합 탭을 열고, 영상 탭은 가장 최근 등록분이 보이도록 맞춥니다.
+                appState.tabOffset = Math.max(0, reports.length - VISIBLE_VIDEO_TABS);
+                activateTab('overview');
             } catch (error) {
                 console.error(error);
                 document.getElementById('overviewSection').innerHTML = `
@@ -1170,23 +1093,54 @@
         }
 
         function renderTabs() {
-            const html = [
-                `<button class="dashboard-tab" data-tab-id="overview">종합</button>`,
-                ...appState.reports.map(report => `<button class="dashboard-tab" data-tab-id="${report.id}">${report.tab_label || report.start_date}</button>`)
-            ].join('');
+            const reports = appState.reports;
+            const visibleCount = VISIBLE_VIDEO_TABS;
+            const maxOffset = Math.max(0, reports.length - visibleCount);
+            appState.tabOffset = Math.min(Math.max(0, appState.tabOffset), maxOffset);
+            const offset = appState.tabOffset;
+            const showArrows = reports.length > visibleCount;
+            const visibleReports = reports.slice(offset, offset + visibleCount);
+
+            const videoTab = report => `
+                <button type="button" class="dashboard-tab video-tab ${appState.activeTab === report.id ? 'active' : ''}" data-tab-id="${escapeHtml(report.id)}" title="${escapeHtml(report.video_title || report.tab_label)}">
+                    <span class="tab-name">${safeText(report.tab_label || report.start_date)}</span>
+                    <span class="tab-date">${formatShortDate(report.video_start_at)}</span>
+                </button>
+            `;
+            const arrow = (direction, disabled, label, symbol) => `
+                <button type="button" class="tab-arrow" data-tab-shift="${direction}" ${disabled ? 'disabled' : ''} aria-label="${label}">${symbol}</button>
+            `;
 
             const container = document.getElementById('tabsContainer');
-            container.innerHTML = html;
-            container.querySelectorAll('.dashboard-tab').forEach(button => {
+            container.innerHTML = `
+                <button type="button" class="dashboard-tab overview-tab ${appState.activeTab === 'overview' ? 'active' : ''}" data-tab-id="overview">종합</button>
+                <div class="tab-scroller">
+                    ${showArrows ? arrow(-1, offset === 0, '이전 영상 탭', '‹') : ''}
+                    <div class="tab-track">${visibleReports.map(videoTab).join('')}</div>
+                    ${showArrows ? arrow(1, offset >= maxOffset, '다음 영상 탭', '›') : ''}
+                </div>
+            `;
+
+            container.querySelectorAll('[data-tab-id]').forEach(button => {
                 button.addEventListener('click', () => activateTab(button.dataset.tabId));
+            });
+            container.querySelectorAll('[data-tab-shift]').forEach(button => {
+                button.addEventListener('click', () => {
+                    appState.tabOffset += Number(button.dataset.tabShift);
+                    renderTabs();
+                });
             });
         }
 
         function activateTab(tabId) {
             appState.activeTab = tabId;
-            document.querySelectorAll('.dashboard-tab').forEach(button => {
-                button.classList.toggle('active', button.dataset.tabId === tabId);
-            });
+
+            const index = appState.reports.findIndex(report => report.id === tabId);
+            if (index !== -1) {
+                if (index < appState.tabOffset) appState.tabOffset = index;
+                if (index >= appState.tabOffset + VISIBLE_VIDEO_TABS) appState.tabOffset = index - VISIBLE_VIDEO_TABS + 1;
+            }
+            renderTabs();
 
             const overviewSection = document.getElementById('overviewSection');
             const detailSection = document.getElementById('detailSection');
@@ -1203,318 +1157,218 @@
             renderDetail(tabId);
         }
 
+        // ---------- 종합 탭 ----------
+        const SMALL_SAMPLE = 30;      // 이보다 분석 댓글이 적으면 '표본 적음' 표시
+        const MIN_CELL_COUNT = 5;     // 주제별 부정 비중은 이 건수 이상일 때만 표시
+        const VIEW_CURVE_DAYS = 30;   // 조회수 추이 비교 구간(게재 후 일수)
+        const videoPalette = ['#2563eb', '#f59e0b', '#0d9488', '#7c3aed', '#db2777', '#64748b', '#0891b2', '#a16207'];
+
+        function parseKstTime(value) {
+            if (!value) return null;
+            const time = new Date(String(value).trim().replace(' ', 'T') + '+09:00').getTime();
+            return Number.isFinite(time) ? time : null;
+        }
+
+        // 게재 후 N일 시점의 누적 조회수(수집 지점 사이는 선형 보간). 아직 N일이 지나지 않았으면 null.
+        function viewsAtDays(bundle, days) {
+            const start = parseKstTime(bundle.report.video_start_at);
+            if (start === null) return null;
+            const target = start + days * 86400000;
+            const points = bundle.stats
+                .map(row => ({ time: parseKstTime(row.timestamp), views: row.view_count }))
+                .filter(point => point.time !== null);
+            if (!points.length || points[points.length - 1].time < target) return null;
+
+            const nextIndex = points.findIndex(point => point.time >= target);
+            if (nextIndex <= 0) return points[Math.max(0, nextIndex)].views;
+            const prev = points[nextIndex - 1];
+            const next = points[nextIndex];
+            const ratio = (target - prev.time) / Math.max(1, next.time - prev.time);
+            return Math.round(prev.views + (next.views - prev.views) * ratio);
+        }
+
+        function percent(count, total) {
+            return total ? Math.round((count / total) * 100) : 0;
+        }
+
+        function renderSentimentBar(bundle) {
+            const total = bundle.totalComments;
+            const positive = percent(bundle.sentimentCounts['긍정'] || 0, total);
+            const negative = percent(bundle.sentimentCounts['부정'] || 0, total);
+            const neutral = Math.max(0, 100 - positive - negative);
+            return `
+                <div class="mini-bar ${total < SMALL_SAMPLE ? 'is-faint' : ''}" title="긍정 ${positive}% · 중립 ${neutral}% · 부정 ${negative}%">
+                    <span style="width:${positive}%; background:${colorMap['긍정']}"></span>
+                    <span style="width:${neutral}%; background:${colorMap['중립']}"></span>
+                    <span style="width:${negative}%; background:${colorMap['부정']}"></span>
+                </div>
+                <div class="mini-bar-legend"><span class="text-positive">긍정 ${positive}%</span> · <span class="text-negative">부정 ${negative}%</span></div>
+            `;
+        }
+
+        // '기관 운영 등 기타'는 모든 영상에서 1위라 비교 의미가 없으므로 정책 주제 중 최다 언급을 보여줍니다.
+        function renderTopIssue(bundle) {
+            const issues = categoryOrder
+                .filter(category => category !== '기관 운영 등 기타')
+                .map(category => [category, Object.values(bundle.categoryCounts[category] || {}).reduce((sum, value) => sum + value, 0)])
+                .filter(([, count]) => count > 0)
+                .sort((a, b) => b[1] - a[1]);
+            if (!issues.length) return '<span class="cell-sub">없음</span>';
+            const [category, count] = issues[0];
+            return `${escapeHtml(category)}<div class="cell-sub">${percent(count, bundle.totalComments)}% · ${formatNumber(count)}건</div>`;
+        }
+
         function renderOverview() {
-            const bundles = getSortedBundles();
-            const selectedBundles = getSelectedOverviewBundles();
-            const totalViews = bundles.reduce((acc, bundle) => acc + Number(bundle.latest?.view_count || 0), 0);
-            const totalComments = bundles.reduce((acc, bundle) => acc + bundle.totalComments, 0);
-            const latestUpdate = bundles
-                .map(bundle => bundle.latest?.timestamp)
-                .filter(Boolean)
-                .sort()
-                .slice(-1)[0] || '-';
-            const latestBundle = bundles[0] || null;
-            const insights = getExecutiveInsights(selectedBundles, bundles);
-
+            const bundles = getOrderedBundles();
             const overviewSection = document.getElementById('overviewSection');
+
+            if (!bundles.length) {
+                overviewSection.innerHTML = '<div class="card-panel"><div class="panel-body"><div class="empty-msg">표시할 영상이 없습니다.</div></div></div>';
+                return;
+            }
+
+            const rows = bundles.map(bundle => {
+                const report = bundle.report;
+                const views = Number(bundle.latest?.view_count || 0);
+                const likes = Number(bundle.latest?.like_count || 0);
+                const weekViews = viewsAtDays(bundle, 7);
+                const likeRate = views ? `${(likes / views * 100).toFixed(1)}%` : '-';
+                return `
+                    <tr data-report-id="${escapeHtml(report.id)}">
+                        <td>
+                            <div class="fw-bold">${safeText(report.tab_label)}</div>
+                            <div class="cell-sub">${formatDateOnly(report.video_start_at)}</div>
+                        </td>
+                        <td class="num">${formatNumber(views)}</td>
+                        <td class="num">${weekViews === null ? '<span class="cell-sub">7일 미경과</span>' : formatNumber(weekViews)}</td>
+                        <td class="num">${likeRate}</td>
+                        <td class="num">${formatNumber(bundle.totalComments)}${bundle.totalComments < SMALL_SAMPLE ? '<div class="small-sample">표본 적음</div>' : ''}</td>
+                        <td class="sentiment-cell">${renderSentimentBar(bundle)}</td>
+                        <td>${renderTopIssue(bundle)}</td>
+                    </tr>
+                `;
+            }).join('');
+
             overviewSection.innerHTML = `
-                <div class="row g-3 mb-3">
-                    <div class="col-6 col-lg-3">${createMetricCard('대상 프로그램', `${bundles.length}개`, '현재 비교 중인 전체 프로그램 수')}</div>
-                    <div class="col-6 col-lg-3">${createMetricCard('누적 조회수', formatNumber(totalViews), '각 프로그램 최신 조회수 합계')}</div>
-                    <div class="col-6 col-lg-3">${createMetricCard('분석 댓글 수', formatNumber(totalComments), '광고성 댓글 제외 기준')}</div>
-                    <div class="col-6 col-lg-3">${createMetricCard('최근 업데이트', latestUpdate, '가장 최근 수집 시각 기준')}</div>
-                </div>
-
-                <div class="card-panel">
-                    <div class="panel-body">
-                        <div class="overview-toolbar">
-                            <div class="overview-toolbar-copy">
-                                <div class="eyebrow">Overview</div>
-                                <h3 class="overview-toolbar-title">종합 현황</h3>
-                                <p class="overview-toolbar-text">최신 프로그램을 중심으로 전체 흐름을 살펴보고, 필요한 대상만 골라 비교할 수 있도록 정리했습니다. 현재 첫 화면은 최신 영상 분석 탭으로 유지되며, 종합 탭에서는 전체 프로그램의 위치와 차이를 빠르게 확인할 수 있습니다.</p>
-                            </div>
-                            <div class="compare-selector">
-                                <h4 class="compare-selector-title">비교 대상 선택</h4>
-                                <p class="compare-selector-copy">종합 차트에는 선택한 프로그램만 반영됩니다. 최근 프로그램 3개를 기본으로 두고, 최대 4개까지 비교할 수 있습니다.</p>
-                                <div class="compare-chip-wrap">
-                                    ${bundles.map(bundle => `
-                                        <button type="button" class="compare-chip ${selectedBundles.some(item => item.report.id === bundle.report.id) ? 'active' : ''}" data-compare-id="${bundle.report.id}">
-                                            ${safeText(bundle.report.tab_label)}
-                                        </button>
-                                    `).join('')}
-                                </div>
-                                <div class="compare-selector-note">현재 선택: ${selectedBundles.map(bundle => safeText(bundle.report.tab_label)).join(', ') || '-'}</div>
-                            </div>
-                        </div>
+                <div class="card-panel compare-panel">
+                    <div class="panel-header">
+                        <h3 class="panel-title">영상별 비교</h3>
+                        <p class="panel-subtitle">등록 순서대로 정리했습니다. 행을 누르면 해당 영상 탭으로 이동합니다. 조회수는 게재 시점이 달라 누적값보다 <b>게재 7일 조회수</b>로 비교하는 것이 공정합니다.</p>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table align-middle mb-0 compare-table">
+                            <thead>
+                                <tr>
+                                    <th>영상</th>
+                                    <th class="num">현재 조회수</th>
+                                    <th class="num">게재 7일 조회수</th>
+                                    <th class="num">좋아요율</th>
+                                    <th class="num">분석 댓글</th>
+                                    <th>감성 분포</th>
+                                    <th>주요 쟁점</th>
+                                </tr>
+                            </thead>
+                            <tbody>${rows}</tbody>
+                        </table>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-xl-8">
+                    <div class="col-xl-6">
                         <div class="card-panel">
                             <div class="panel-header">
-                                <h3 class="panel-title">프로그램 목록</h3>
-                                <p class="panel-subtitle">주요 지표와 우세 감성을 기준으로 프로그램별 현황을 정리했습니다.</p>
+                                <h3 class="panel-title">게재 후 조회수 추이</h3>
+                                <p class="panel-subtitle">게재 시점을 0일로 맞춰 초기 확산 속도를 비교합니다(로그 눈금, 최대 ${VIEW_CURVE_DAYS}일).</p>
                             </div>
-                            <div class="panel-body pt-0">
-                                ${isMobile ? `
-                                    <div>
-                                        ${bundles.map(bundle => renderOverviewListCard(bundle)).join('')}
-                                    </div>
-                                ` : `
-                                    <div class="table-responsive">
-                                        <table class="table align-middle mb-0 overview-list-table">
-                                            <thead>
-                                                <tr>
-                                                    <th>프로그램</th>
-                                                    <th>게재일</th>
-                                                    <th>조회수</th>
-                                                    <th>댓글</th>
-                                                    <th>분석수</th>
-                                                    <th>우세감성</th>
-                                                    <th>대표분류</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                ${bundles.map(bundle => `
-                                                    <tr data-report-id="${bundle.report.id}">
-                                                        <td class="fw-bold">${safeText(bundle.report.tab_label)}</td>
-                                                        <td>${formatDateOnly(bundle.report.video_start_at)}</td>
-                                                        <td>${formatNumber(bundle.latest?.view_count)}</td>
-                                                        <td>${formatNumber(bundle.latest?.comment_count)}</td>
-                                                        <td>${formatNumber(bundle.totalComments)}</td>
-                                                        <td><span class="sentiment-badge ${getSentimentClass(bundle.dominantSentiment)}">${bundle.dominantSentiment}</span></td>
-                                                        <td>${safeText(bundle.topCategory)}</td>
-                                                    </tr>
-                                                `).join('')}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                `}
+                            <div class="panel-body">
+                                <div id="overviewViewCurveChart" class="chart-container short"><div class="empty-msg">차트 로딩 중...</div></div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-4">
+                    <div class="col-xl-6">
                         <div class="card-panel">
                             <div class="panel-header">
-                                <h3 class="panel-title">비교 관찰 포인트</h3>
-                                <p class="panel-subtitle">선택한 프로그램과 최신 현황을 기준으로 우선 확인할 지점을 정리했습니다.</p>
+                                <h3 class="panel-title">주제별 부정 비중</h3>
+                                <p class="panel-subtitle">각 영상에서 주제별 댓글 중 부정 댓글의 비율입니다. 색이 진할수록 부정이 많고, ${MIN_CELL_COUNT}건 미만은 표시하지 않습니다.</p>
                             </div>
                             <div class="panel-body">
-                                <div class="executive-note">
-                                    <h4 class="executive-note-title">${latestBundle ? `${safeText(latestBundle.report.tab_label)}가 최신 게재 프로그램입니다.` : '비교 요약'}</h4>
-                                    <p class="executive-note-copy">종합 탭은 전체 현황을 빠르게 파악한 뒤, 아래 차트에서 선택 프로그램 간 차이를 바로 확인할 수 있도록 구성했습니다.</p>
-                                    <div class="executive-note-list">
-                                        ${insights.map(item => `
-                                            <div class="executive-note-item">
-                                                <div class="executive-note-label">${item.label}</div>
-                                                <div class="executive-note-value">${safeText(item.value)}</div>
-                                            </div>
-                                        `).join('')}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-xl-5">
-                        <div class="card-panel">
-                            <div class="panel-header">
-                                <h3 class="panel-title">감성 분포 비교</h3>
-                                <p class="panel-subtitle">선택한 프로그램의 긍정·부정·중립 비중을 동일 기준에서 비교합니다.</p>
-                            </div>
-                            <div class="panel-body">
-                                <div id="overviewSentimentChart" class="chart-container short"><div class="empty-msg">차트 로딩 중...</div></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-7">
-                        <div class="card-panel">
-                            <div class="panel-header">
-                                <h3 class="panel-title">분류별 여론 비교</h3>
-                                <p class="panel-subtitle">선택한 프로그램에서 어떤 주제가 부각되는지 분류별 반응 차이로 보여줍니다.</p>
-                            </div>
-                            <div class="panel-body">
-                                <div id="overviewCategoryChart" class="chart-container category-overview-chart"><div class="empty-msg">차트 로딩 중...</div></div>
+                                ${renderNegativeHeatmap(bundles)}
                             </div>
                         </div>
                     </div>
                 </div>
             `;
 
-            document.querySelectorAll('[data-compare-id]').forEach(button => {
-                button.addEventListener('click', () => toggleOverviewCompareId(button.dataset.compareId));
-            });
-
-            document.querySelectorAll('[data-report-id]').forEach(row => {
+            overviewSection.querySelectorAll('[data-report-id]').forEach(row => {
                 row.addEventListener('click', () => activateTab(row.dataset.reportId));
             });
 
-            renderOverviewCharts();
+            renderViewCurveChart(bundles);
         }
 
-        function renderOverviewListCard(bundle) {
+        function renderNegativeHeatmap(bundles) {
+            const categories = categoryOrder;
+            const header = categories.map(category => `<th>${escapeHtml(category)}</th>`).join('');
+            const body = bundles.map(bundle => {
+                const cells = categories.map(category => {
+                    const counts = bundle.categoryCounts[category] || {};
+                    const total = Object.values(counts).reduce((sum, value) => sum + value, 0);
+                    if (total < MIN_CELL_COUNT) {
+                        return `<td class="heat-cell is-empty" title="${total}건">-</td>`;
+                    }
+                    const share = (counts['부정'] || 0) / total;
+                    const textColor = share >= 0.55 ? '#ffffff' : 'var(--text)';
+                    return `
+                        <td class="heat-cell" style="background: rgba(220, 38, 38, ${(0.08 + share * 0.82).toFixed(2)}); color: ${textColor};" title="부정 ${counts['부정'] || 0}건 / ${total}건">
+                            <div class="heat-value">${Math.round(share * 100)}%</div>
+                            <div class="heat-count">${total}건</div>
+                        </td>
+                    `;
+                }).join('');
+                return `<tr><th class="heat-row-label">${safeText(bundle.report.tab_label)}</th>${cells}</tr>`;
+            }).join('');
+
             return `
-                <div class="overview-list-card" data-report-id="${bundle.report.id}">
-                    <div class="overview-list-header">
-                        <div>
-                            <div class="badge-soft mb-2">${safeText(bundle.report.tab_label)}</div>
-                            <div class="overview-list-title">${safeText(bundle.report.video_title)}</div>
-                        </div>
-                        <span class="sentiment-badge ${getSentimentClass(bundle.dominantSentiment)}">${bundle.dominantSentiment}</span>
-                    </div>
-                    <div class="overview-list-meta">
-                        <div>
-                            <div class="meta-label">게재일</div>
-                            <div class="meta-value">${formatDateOnly(bundle.report.video_start_at)}</div>
-                        </div>
-                        <div>
-                            <div class="meta-label">조회수</div>
-                            <div class="meta-value">${formatNumber(bundle.latest?.view_count)}</div>
-                        </div>
-                        <div>
-                            <div class="meta-label">댓글</div>
-                            <div class="meta-value">${formatNumber(bundle.latest?.comment_count)}</div>
-                        </div>
-                        <div>
-                            <div class="meta-label">분석수</div>
-                            <div class="meta-value">${formatNumber(bundle.totalComments)}</div>
-                        </div>
-                        <div style="grid-column: 1 / -1;">
-                            <div class="meta-label">대표분류</div>
-                            <div class="meta-value">${safeText(bundle.topCategory)}</div>
-                        </div>
-                    </div>
+                <div class="table-responsive">
+                    <table class="heat-table">
+                        <thead><tr><th></th>${header}</tr></thead>
+                        <tbody>${body}</tbody>
+                    </table>
                 </div>
             `;
         }
 
-        function renderOverviewCharts() {
-            const bundles = getSelectedOverviewBundles();
-            prepareChartContainer('overviewSentimentChart');
-            prepareChartContainer('overviewCategoryChart');
+        function renderViewCurveChart(bundles) {
+            const container = prepareChartContainer('overviewViewCurveChart');
+            if (!container) return;
 
-            const labels = bundles.map(bundle => bundle.report.tab_label || bundle.report.start_date);
-            const sentimentTraces = sentimentOrder.map(sentiment => ({
-                x: labels,
-                y: bundles.map(bundle => {
-                    const total = bundle.totalComments || 0;
-                    const count = bundle.sentimentCounts[sentiment] || 0;
-                    return total ? Math.round((count / total) * 1000) / 10 : 0;
-                }),
-                customdata: bundles.map(bundle => {
-                    const total = bundle.totalComments || 0;
-                    return [bundle.sentimentCounts[sentiment] || 0, total];
-                }),
-                type: 'bar',
-                name: sentiment,
-                marker: { color: colorMap[sentiment] },
-                hovertemplate: '%{x}<br>' + sentiment + ': %{customdata[0]}건 (%{y}%)<br>전체: %{customdata[1]}건<extra></extra>'
-            }));
-
-            Plotly.newPlot('overviewSentimentChart', sentimentTraces, {
-                barmode: 'stack',
-                barnorm: 'percent',
-                margin: { t: 20, b: 70, l: 48, r: 12 },
-                xaxis: { tickfont: { size: chartFontSize }, tickangle: isMobile ? -18 : 0 },
-                yaxis: { title: '비중(%)', range: [0, 100], tickfont: { size: chartFontSize }, ticksuffix: '%' },
-                legend: { orientation: 'h', y: -0.16, x: 0.5, xanchor: 'center', traceorder: 'normal' }
-            }, configOptions);
-
-            const categories = sortCategories(
-                categoryOrder.filter(category => bundles.some(bundle => {
-                    const counts = bundle.categoryCounts[category] || {};
-                    return Object.values(counts).reduce((acc, value) => acc + value, 0) > 0;
-                }))
-            );
-
-            const rowHeight = bundles.length <= 2 ? 0.36 : 0.24;
-            const rowGap = bundles.length <= 2 ? 0.06 : 0.04;
-            const totalHeight = bundles.length * rowHeight + Math.max(0, bundles.length - 1) * rowGap;
-            const topPadding = Math.max(0.015, (1 - totalHeight) / 2);
-            const categoryTraces = [];
-            const axisLayout = {};
-            const annotations = [];
-            const shapes = [];
-
-            bundles.forEach((bundle, index) => {
-                const axisSuffix = index === 0 ? '' : String(index + 1);
-                const xAxisName = getAxisName('x', index);
-                const yAxisName = getAxisName('y', index);
-                const domainEnd = 1 - topPadding - index * (rowHeight + rowGap);
-                const domainStart = Math.max(0, domainEnd - rowHeight);
-
-                sentimentOrder.forEach(sentiment => {
-                    categoryTraces.push({
-                        x: categories,
-                        y: categories.map(category => (bundle.categoryCounts[category] || {})[sentiment] || 0),
-                        type: 'bar',
-                        name: sentiment,
-                        marker: { color: colorMap[sentiment] },
-                        xaxis: xAxisName,
-                        yaxis: yAxisName,
-                        showlegend: index === 0,
-                        hovertemplate: `${bundle.report.tab_label || bundle.report.start_date}<br>%{x}<br>${sentiment}: %{y}건<extra></extra>`
-                    });
-                });
-
-                axisLayout[`xaxis${axisSuffix}`] = {
-                    domain: [0.08, 0.995],
-                    anchor: yAxisName,
-                    tickangle: isMobile ? -28 : -16,
-                    tickfont: { size: chartFontSize },
-                    showgrid: false,
-                    showticklabels: index === bundles.length - 1,
-                    automargin: true
+            const traces = bundles.map((bundle, index) => {
+                const start = parseKstTime(bundle.report.video_start_at);
+                const points = start === null ? [] : bundle.stats
+                    .map(row => ({ day: (parseKstTime(row.timestamp) - start) / 86400000, views: row.view_count }))
+                    .filter(point => point.day > 0 && point.day <= VIEW_CURVE_DAYS && point.views > 0);
+                return {
+                    x: points.map(point => Math.round(point.day * 100) / 100),
+                    y: points.map(point => point.views),
+                    type: 'scatter',
+                    mode: 'lines',
+                    name: bundle.report.tab_label || bundle.report.start_date,
+                    line: { color: videoPalette[index % videoPalette.length], width: 2.5 },
+                    hovertemplate: `${escapeHtml(bundle.report.tab_label)}<br>게재 %{x:.1f}일 후<br>조회수 %{y:,}<extra></extra>`
                 };
-                axisLayout[`yaxis${axisSuffix}`] = {
-                    domain: [domainStart, domainEnd],
-                    anchor: xAxisName,
-                    tickfont: { size: chartFontSize },
-                    rangemode: 'tozero',
-                    gridcolor: 'rgba(148, 163, 184, 0.22)',
-                    zerolinecolor: 'rgba(148, 163, 184, 0.32)',
-                    title: { text: '', standoff: 0 },
-                    automargin: true
-                };
+            }).filter(trace => trace.x.length);
 
-                annotations.push({
-                    xref: 'paper',
-                    yref: 'paper',
-                    x: 0.028,
-                    y: (domainStart + domainEnd) / 2,
-                    text: `<b>${safeText(bundle.report.tab_label)}</b>`,
-                    showarrow: false,
-                    xanchor: 'center',
-                    yanchor: 'middle',
-                    align: 'left',
-                    textangle: -90,
-                    font: { size: isMobile ? 11 : 12, color: '#334155' }
-                });
+            if (!traces.length) {
+                container.innerHTML = '<div class="empty-msg">비교할 조회수 데이터가 없습니다.</div>';
+                return;
+            }
 
-                if (index < bundles.length - 1) {
-                    shapes.push({
-                        type: 'line',
-                        xref: 'paper',
-                        yref: 'paper',
-                        x0: 0.08,
-                        x1: 0.995,
-                        y0: domainStart - (rowGap / 2),
-                        y1: domainStart - (rowGap / 2),
-                        line: { color: 'rgba(148, 163, 184, 0.28)', width: 1 }
-                    });
-                }
-            });
-
-            Plotly.newPlot('overviewCategoryChart', categoryTraces, {
-                barmode: 'stack',
-                margin: { t: 10, b: 84, l: 6, r: 8 },
-                legend: { orientation: 'h', y: -0.12, x: 0.5, xanchor: 'center', traceorder: 'normal' },
-                annotations,
-                shapes,
-                ...axisLayout
+            Plotly.newPlot('overviewViewCurveChart', traces, {
+                margin: { t: 10, b: isMobile ? 96 : 70, l: 56, r: 12 },
+                xaxis: { title: isMobile ? '' : '게재 후 경과일', range: [0, VIEW_CURVE_DAYS], tickfont: { size: chartFontSize }, gridcolor: 'rgba(148, 163, 184, 0.22)' },
+                yaxis: { type: 'log', tickfont: { size: chartFontSize }, gridcolor: 'rgba(148, 163, 184, 0.22)' },
+                legend: { orientation: 'h', y: isMobile ? -0.18 : -0.28, x: 0.5, xanchor: 'center' },
+                hovermode: 'closest'
             }, configOptions);
         }
 
@@ -1663,7 +1517,9 @@
                     `;
                 }).join('');
             } catch (error) {
-                container.innerHTML = '<div class="empty-msg">대표 댓글 데이터가 아직 생성되지 않았습니다. 다음 자동 업데이트 후 표시됩니다.</div>';
+                container.innerHTML = report.collect_enabled === false
+                    ? '<div class="empty-msg">이 영상은 대표 댓글 데이터가 없습니다.</div>'
+                    : '<div class="empty-msg">대표 댓글 데이터가 아직 생성되지 않았습니다. 다음 자동 업데이트 후 표시됩니다.</div>';
             }
         }
 

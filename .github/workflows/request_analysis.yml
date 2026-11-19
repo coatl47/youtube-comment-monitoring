@@ -9,7 +9,7 @@ on:
         description: '분석할 유튜브 영상 주소'
         required: true
       exclusive:
-        description: '이 영상만 대시보드에 표시(다른 리포트 비활성화)'
+        description: '이 영상만 자동 수집(다른 영상은 탭에 남기고 수집만 중지)'
         type: boolean
         default: true
 
@@ -53,7 +53,7 @@ jobs:
           REPORT_ID="$(python -c "import json; print(json.load(open('request_result.json'))['report_id'])")"
           echo "report_id=$REPORT_ID" >> "$GITHUB_OUTPUT"
 
-      - name: 이 영상만 표시하도록 정리
+      - name: 이 영상만 수집하도록 정리
         if: github.event_name == 'workflow_dispatch' && inputs.exclusive
         env:
           REPORT_ID: ${{ steps.request.outputs.report_id }}
@@ -64,8 +64,10 @@ jobs:
           with open("dashboard_config.json", encoding="utf-8") as f:
               config = json.load(f)
           for report in config["reports"]:
+              # 대시보드 탭(enabled)은 유지하고 자동 수집(collect_enabled)만 이 영상으로 한정합니다.
               active = report["id"] == target
-              report["enabled"] = active
+              if active:
+                  report["enabled"] = True
               report["collect_enabled"] = active
           config["default_report_id"] = target
           with open("dashboard_config.json", "w", encoding="utf-8") as f:

@@ -11,12 +11,12 @@
       "start_date": "20260214",
       "video_start_at": "2026-02-14 08:00:00",
       "prompt_file": "prompt/prompt_20260214.txt",
-      "enabled": false,
+      "enabled": true,
       "collect_enabled": false
     },
     {
       "id": "future_scenario_shorts_20260220",
-      "tab_label": "전북CBS 라디오X",
+      "tab_label": "전북CBS",
       "video_title": "21세기 말까지 기금 소진 걱정 끝, 김성주 이사장이 밝힌 1400조 국민연금의 미래 시나리오",
       "video_url": "https://www.youtube.com/watch?v=_xfMI9Lwm4U",
       "start_date": "20260220",
@@ -33,7 +33,7 @@
       "start_date": "20260423",
       "video_start_at": "2026-04-23 19:00:00",
       "prompt_file": "prompt/prompt_20260423.txt",
-      "enabled": false,
+      "enabled": true,
       "collect_enabled": false
     },
     {
@@ -49,18 +49,18 @@
     },
     {
       "id": "youtube__OQNFmmR9kQ",
-      "tab_label": "국민연금 '리밸런싱' 이대로 괜찮나? 이사장 본인 등판",
+      "tab_label": "장르만 여의도",
       "video_title": "국민연금 '리밸런싱' 이대로 괜찮나? 이사장 본인 등판",
       "video_url": "https://www.youtube.com/watch?v=_OQNFmmR9kQ",
       "start_date": "20260715_180334",
       "video_start_at": "2026-07-15 18:00:06",
       "prompt_file": "prompt/prompt_base.txt",
-      "enabled": false,
+      "enabled": true,
       "collect_enabled": false
     },
     {
       "id": "youtube_sACZE_SoXZ0",
-      "tab_label": "[뉴스하이킥] 김성주 이사장 \"국내 주식시장서 국민연금 비",
+      "tab_label": "뉴스하이킥",
       "video_title": "[뉴스하이킥] 김성주 이사장 \"국내 주식시장서 국민연금 비중 6~7% 불과… 증시 폭락 책임론 사실무근\" - 김성주, MBC 260730 방송",
       "video_url": "https://www.youtube.com/watch?v=sACZE_SoXZ0",
       "start_date": "20260730_214202",

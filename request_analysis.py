@@ -78,7 +78,8 @@ def build_report(config: dict, youtube_url: str, video_id: str) -> tuple[dict, b
         published_at = ""
     report = {
         "id": f"youtube_{video_id}",
-        "tab_label": title[:32],
+        # 탭에는 채널명을 짧게 표시하고, 채널명이 없으면 제목 앞부분을 씁니다.
+        "tab_label": (stats.get("channel_title") or title)[:20],
         "video_title": title,
         "video_url": youtube_url,
         "start_date": now.strftime("%Y%m%d_%H%M%S"),
