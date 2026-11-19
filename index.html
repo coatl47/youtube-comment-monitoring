@@ -1181,6 +1181,7 @@
         }
 
         // 게재 후 N일 시점의 누적 조회수(수집 지점 사이는 선형 보간). 아직 N일이 지나지 않았으면 null.
+        const MAX_INTERP_GAP_MS = 2 * 86400000; // 보간 허용 간격(2일)
         function viewsAtDays(bundle, days) {
             const start = parseKstTime(bundle.report.video_start_at);
             if (start === null) return null;
@@ -1191,11 +1192,19 @@
             if (!points.length || points[points.length - 1].time < target) return null;
 
             const nextIndex = points.findIndex(point => point.time >= target);
-            if (nextIndex <= 0) return points[Math.max(0, nextIndex)].views;
+            if (nextIndex <= 0) return points[Math.max(0, nextIndex)].time - target <= MAX_INTERP_GAP_MS ? points[Math.max(0, nextIndex)].views : null;
             const prev = points[nextIndex - 1];
             const next = points[nextIndex];
+            // 게재 후 한참 뒤에 수집을 시작한 영상은 실측값이 없으므로 추정하지 않습니다.
+            if (next.time - prev.time > MAX_INTERP_GAP_MS) return null;
             const ratio = (target - prev.time) / Math.max(1, next.time - prev.time);
             return Math.round(prev.views + (next.views - prev.views) * ratio);
+        }
+
+        // 7일 조회수가 없을 때 이유: 아직 7일이 안 됐는지, 게재 후 늦게 수집을 시작했는지.
+        function weekViewsNote(bundle) {
+            const start = parseKstTime(bundle.report.video_start_at);
+            return start !== null && Date.now() - start < 7 * 86400000 ? '7일 미경과' : '수집 전';
         }
 
         function percent(count, total) {
@@ -1251,7 +1260,7 @@
                             <div class="cell-sub">${formatDateOnly(report.video_start_at)}</div>
                         </td>
                         <td class="num">${formatNumber(views)}</td>
-                        <td class="num">${weekViews === null ? '<span class="cell-sub">7일 미경과</span>' : formatNumber(weekViews)}</td>
+                        <td class="num">${weekViews === null ? `<span class="cell-sub">${weekViewsNote(bundle)}</span>` : formatNumber(weekViews)}</td>
                         <td class="num">${likeRate}</td>
                         <td class="num">${formatNumber(bundle.totalComments)}${bundle.totalComments < SMALL_SAMPLE ? '<div class="small-sample">표본 적음</div>' : ''}</td>
                         <td class="sentiment-cell">${renderSentimentBar(bundle)}</td>
