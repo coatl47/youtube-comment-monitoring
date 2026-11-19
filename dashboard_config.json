@@ -32,7 +32,7 @@
       "video_url": "https://youtu.be/EBLo0C-sj2w?si=3OzV4KhNnKvKrspb",
       "start_date": "20260423",
       "video_start_at": "2026-04-23 19:00:00",
-      "prompt_file": "prompt/prompt_20260423.txt",
+      "prompt_file": "prompt/prompt_base.txt",
       "enabled": true,
       "collect_enabled": false
     },
